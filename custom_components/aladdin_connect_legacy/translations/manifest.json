@@ -5,7 +5,7 @@
     "@andyrak"
   ],
   "config_flow": true,
-  "documentation": "https://www.home-assistant.io/integrations/aladdin_connect",
+  "documentation": "https://github.com/andyrak/hacs-aladdin-legacy",
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/andyrak/hacs-aladdin-legacy/issues",
   "integration_type": "hub",

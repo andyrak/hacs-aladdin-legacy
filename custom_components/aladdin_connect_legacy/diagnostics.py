@@ -4,8 +4,6 @@ from __future__ import annotations
 
 from typing import Any
 
-from AIOAladdinConnect import AladdinConnectClient
-
 from homeassistant.components.diagnostics import async_redact_data
 from homeassistant import config_entries
 from homeassistant.core import HomeAssistant

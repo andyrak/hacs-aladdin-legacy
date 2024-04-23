@@ -6,8 +6,6 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from typing import cast
 
-from AIOAladdinConnect import AladdinConnectClient
-
 from homeassistant.components.sensor import (
     SensorDeviceClass,
     SensorEntity,

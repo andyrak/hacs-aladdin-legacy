@@ -5,8 +5,6 @@ from __future__ import annotations
 from collections.abc import Mapping
 from typing import Any
 
-from AIOAladdinConnect import AladdinConnectClient
-import AIOAladdinConnect.session_manager as Aladdin
 from aiohttp.client_exceptions import ClientError
 import voluptuous as vol
 

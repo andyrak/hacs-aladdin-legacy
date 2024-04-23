@@ -5,8 +5,6 @@ from __future__ import annotations
 from datetime import timedelta
 from typing import Any
 
-from AIOAladdinConnect import AladdinConnectClient, session_manager
-
 from homeassistant.components.cover import CoverDeviceClass, CoverEntity
 from homeassistant import config_entries
 from homeassistant.const import STATE_CLOSED, STATE_CLOSING, STATE_OPENING

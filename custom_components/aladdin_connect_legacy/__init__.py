@@ -2,8 +2,6 @@
 import logging
 from typing import Final
 
-from AIOAladdinConnect import AladdinConnectClient
-import AIOAladdinConnect.session_manager as Aladdin
 from aiohttp import ClientError
 
 from homeassistant import config_entries

@@ -10,7 +10,7 @@ import AIOAladdinConnect.session_manager as Aladdin
 from aiohttp.client_exceptions import ClientError
 import voluptuous as vol
 
-from homeassistant.config_entries import ConfigEntry, ConfigFlow, ConfigFlowResult
+from homeassistant import config_entries
 from homeassistant.const import CONF_PASSWORD, CONF_USERNAME
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import HomeAssistantError
@@ -48,15 +48,15 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> None:
         raise InvalidAuth from ex
 
 
-class AladdinConnectConfigFlow(ConfigFlow, domain=DOMAIN):
+class AladdinConnectConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a config flow for Aladdin Connect."""
 
     VERSION = 1
-    entry: ConfigEntry | None
+    entry: config_entries.ConfigEntry | None
 
     async def async_step_reauth(
         self, entry_data: Mapping[str, Any]
-    ) -> ConfigFlowResult:
+    ) -> config_entries.ConfigFlowResult:
         """Handle re-authentication with Aladdin Connect."""
 
         self.entry = self.hass.config_entries.async_get_entry(self.context["entry_id"])
@@ -64,7 +64,7 @@ class AladdinConnectConfigFlow(ConfigFlow, domain=DOMAIN):
 
     async def async_step_reauth_confirm(
         self, user_input: dict[str, Any] | None = None
-    ) -> ConfigFlowResult:
+    ) -> config_entries.ConfigFlowResult:
         """Confirm re-authentication with Aladdin Connect."""
         errors: dict[str, str] = {}
 
@@ -104,7 +104,7 @@ class AladdinConnectConfigFlow(ConfigFlow, domain=DOMAIN):
 
     async def async_step_user(
         self, user_input: dict[str, Any] | None = None
-    ) -> ConfigFlowResult:
+    ) -> config_entries.ConfigFlowResult:
         """Handle the initial step."""
         if user_input is None:
             return self.async_show_form(

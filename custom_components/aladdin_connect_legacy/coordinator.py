@@ -1,9 +1,9 @@
-"""DataUpdateCoordinator for custom_components/aladdin_connect_legacy_integration."""
+"""DataUpdateCoordinator for custom_components/aladdin_connect_legacy."""
 from __future__ import annotations
 
 from datetime import timedelta
 
-from homeassistant.config_entries import ConfigEntry
+from homeassistant import config_entries
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import (
     DataUpdateCoordinator,
@@ -23,7 +23,7 @@ from .const import DOMAIN, LOGGER
 class BlueprintDataUpdateCoordinator(DataUpdateCoordinator):
     """Class to manage fetching data from the API."""
 
-    config_entry: ConfigEntry
+    config_entry: config_entries.ConfigEntry
 
     def __init__(
         self,

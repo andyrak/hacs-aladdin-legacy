@@ -7,7 +7,7 @@ from typing import Any
 from AIOAladdinConnect import AladdinConnectClient
 
 from homeassistant.components.diagnostics import async_redact_data
-from homeassistant.config_entries import ConfigEntry
+from homeassistant import config_entries
 from homeassistant.core import HomeAssistant
 
 from .const import DOMAIN
@@ -17,7 +17,7 @@ TO_REDACT = {"serial", "device_id"}
 
 async def async_get_config_entry_diagnostics(
     hass: HomeAssistant,
-    config_entry: ConfigEntry,
+    config_entry: config_entries.ConfigEntry,
 ) -> dict[str, Any]:
     """Return diagnostics for a config entry."""
 

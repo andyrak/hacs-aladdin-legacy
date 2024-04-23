@@ -8,7 +8,7 @@ from typing import Any
 from AIOAladdinConnect import AladdinConnectClient, session_manager
 
 from homeassistant.components.cover import CoverDeviceClass, CoverEntity
-from homeassistant.config_entries import ConfigEntry
+from homeassistant import config_entries
 from homeassistant.const import STATE_CLOSED, STATE_CLOSING, STATE_OPENING
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import HomeAssistantError, PlatformNotReady
@@ -24,7 +24,7 @@ SCAN_INTERVAL = timedelta(seconds=300)
 
 async def async_setup_entry(
     hass: HomeAssistant,
-    config_entry: ConfigEntry,
+    config_entry: config_entries.ConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up the Aladdin Connect platform."""
@@ -39,7 +39,7 @@ async def async_setup_entry(
 
 
 def remove_stale_devices(
-    hass: HomeAssistant, config_entry: ConfigEntry, devices: list[dict]
+    hass: HomeAssistant, config_entry: config_entries.ConfigEntry, devices: list[dict]
 ) -> None:
     """Remove stale devices from device registry."""
     device_registry = dr.async_get(hass)
@@ -74,7 +74,7 @@ class AladdinDevice(CoverEntity):
     _attr_name = None
 
     def __init__(
-        self, acc: AladdinConnectClient, device: DoorDevice, entry: ConfigEntry
+        self, acc: AladdinConnectClient, device: DoorDevice, entry: config_entries.ConfigEntry
     ) -> None:
         """Initialize the Aladdin Connect cover."""
         self._acc = acc

@@ -14,5 +14,4 @@ class DoorDevice(TypedDict):
     status: str
     serial: str
     model: str
-    fault: str
-    battery_level: int
+

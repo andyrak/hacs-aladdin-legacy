@@ -1,5 +1,5 @@
 {
-  "domain": "custom_components",
+  "domain": "aladdin_connect_legacy",
   "name": "Aladdin Connect Legacy",
   "codeowners": [
     "@andyrak"

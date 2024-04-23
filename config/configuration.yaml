@@ -5,4 +5,4 @@ default_config:
 logger:
   default: info
   logs:
-    custom_components.custom_components/aladdin_connect_legacy_integration: debug
+    custom_components.aladdin_connect_legacy: debug

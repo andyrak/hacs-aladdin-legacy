@@ -1,8 +1,8 @@
 {
     "name": "Aladdin Connect Legacy",
-    "filename": "custom_components/aladdin_connect_legacy_integration.zip",
+    "filename": "custom_components/aladdin_connect_legacy.zip",
     "hide_default_branch": true,
-    "homeassistant": "2023.8.0",
+    "homeassistant": "2024.4.3",
     "render_readme": true,
     "zip_release": true
 }

@@ -1,0 +1,19 @@
+{
+  "domain": "aladdin_connect_legacy",
+  "name": "Aladdin Connect Legacy",
+  "codeowners": [
+    "@andyrak"
+  ],
+  "config_flow": true,
+  "documentation": "https://github.com/andyrak/hacs-aladdin-legacy",
+  "integration_type": "hub",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/andyrak/hacs-aladdin-legacy/issues",
+  "loggers": [
+    "aladdin_connect_legacy"
+  ],
+  "requirements": [
+    "AIOAladdinConnect==0.2.0"
+  ],
+  "version": "0.1.0"
+}

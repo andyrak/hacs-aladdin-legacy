@@ -1,4 +1,4 @@
-"""DataUpdateCoordinator for integration_blueprint."""
+"""DataUpdateCoordinator for custom_components/aladdin_connect_legacy_integration."""
 from __future__ import annotations
 
 from datetime import timedelta

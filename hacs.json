@@ -1,6 +1,6 @@
 {
-    "name": "Integration blueprint",
-    "filename": "integration_blueprint.zip",
+    "name": "Aladdin Connect Legacy",
+    "filename": "custom_components/aladdin_connect_legacy_integration.zip",
     "hide_default_branch": true,
     "homeassistant": "2023.8.0",
     "render_readme": true,

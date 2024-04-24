@@ -2,7 +2,6 @@
 
 import base64
 import hmac
-import json
 from collections.abc import Callable
 from functools import partial
 

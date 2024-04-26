@@ -4,9 +4,6 @@
 
 # hacs-aladdin-legacy
 
-## :warning::rotating_light::construction: WORK IN PROGRESS :construction::rotating_light::warning:
-4/22/2024 - This integration is currently not ready for use.
-
 ## Summary
 [Genie Aladdin Connect](https://www.geniecompany.com/aladdin-connect-by-genie) legacy plugin for Home Assistant via HACS.
 

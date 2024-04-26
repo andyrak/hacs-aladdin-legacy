@@ -9,6 +9,7 @@ class DoorDevice(TypedDict):
     """Aladdin door device."""
 
     def __eq__(self, other):
+        """Override == operator to check device_id fields."""
         if not isinstance(other, DoorDevice):
             return NotImplemented
 
@@ -22,6 +23,7 @@ class DoorDevice(TypedDict):
     id: str
     index: int
     link_status: str
+    manufacturer: str
     model: str
     name: str
     ownership: str

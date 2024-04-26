@@ -2,6 +2,7 @@
 import logging
 from typing import Final
 
+from aiohttp import ClientConnectionError, ClientResponseError
 from homeassistant import config_entries
 from homeassistant.const import CONF_PASSWORD, CONF_USERNAME, Platform
 from homeassistant.core import HomeAssistant
@@ -25,11 +26,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: config_entries.ConfigEnt
 
     try:
         await ac.init_session()
-    except (TimeoutError) as ex:
+    except ClientConnectionError or TimeoutError as ex:
         raise ConfigEntryNotReady("Can not connect to host") from ex
-    except:
-        # TODO proper exceptions
-        raise ConfigEntryAuthFailed("Incorrect Password") from ex
+    except ClientResponseError as ex:
+        raise ConfigEntryAuthFailed("Error communicating with server") from ex
+    except Exception:
+        raise ConfigEntryNotReady("Unknown error occurred during setup.")
 
     hass.data.setdefault(DOMAIN, {})[entry.entry_id] = ac
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)

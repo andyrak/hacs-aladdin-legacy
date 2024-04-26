@@ -19,7 +19,7 @@ from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .api import AladdinConnect
-from .const import DOMAIN
+from .const import DOMAIN, MODEL_MAP
 from .model import DoorDevice
 
 
@@ -92,14 +92,15 @@ class AladdinConnectSensor(SensorEntity):
     ) -> None:
         """Initialize a sensor for an Aladdin Connect device."""
         self._device_id = device["device_id"]
-        self._number = device["index"]
+        self._index = device["index"]
         self._ac = ac
+        self._door = device
         self.entity_description = description
-        self._attr_unique_id = f"{self._device_id}-{self._number}-{description.key}"
+        self._attr_unique_id = f"{self._device_id}-{self._index}-{description.key}"
         self._attr_device_info = DeviceInfo(
-            identifiers={(DOMAIN, f"{self._device_id}-{self._number}")},
+            identifiers={(DOMAIN, f"{self._device_id}-{self._index}")},
             name=device["name"],
-            manufacturer="Overhead Door",
+            manufacturer=device["manufacturer"],
             model=device["model"],
         )
         if device["model"] == "01" and description.key in (
@@ -108,10 +109,16 @@ class AladdinConnectSensor(SensorEntity):
         ):
             self._attr_entity_registry_enabled_default = True
 
+        if device["model"] == MODEL_MAP.get('02') and description.key in (
+            "rssi",
+        ):
+            self._attr_entity_registry_enabled_default = True
+
+
     @property
     def native_value(self) -> float | None:
         """Return the state of the sensor."""
         return cast(
             float,
-            self.entity_description.value_fn(self._ac, self._device_id, self._number),
+            self.entity_description.value_fn(self._ac, self._door),
         )

@@ -6,6 +6,7 @@ from datetime import timedelta
 from typing import Any
 
 import homeassistant.helpers.device_registry as dr
+from aiohttp import ClientConnectionError, ClientResponseError
 from homeassistant import config_entries
 from homeassistant.components.cover import CoverDeviceClass, CoverEntity
 from homeassistant.const import STATE_CLOSED, STATE_CLOSING, STATE_OPENING
@@ -44,7 +45,7 @@ def remove_stale_devices(
     device_entries = dr.async_entries_for_config_entry(
         device_registry, config_entry.entry_id
     )
-    all_device_ids = {f"{door["device_id"]}:{door["index"]}" for door in devices}
+    all_device_ids = {f"{door["device_id"]}-{door["index"]}" for door in devices}
 
     for device_entry in device_entries:
         device_id: str | None = None
@@ -72,29 +73,31 @@ class AladdinDevice(CoverEntity):
     _attr_name = None
 
     def __init__(
-        self, ac: AladdinConnect, device: DoorDevice, entry: config_entries.ConfigEntry
+        self, ac: AladdinConnect, door: DoorDevice, entry: config_entries.ConfigEntry
     ) -> None:
         """Initialize the Aladdin Connect cover."""
         self._ac = ac
-        self._device = device
-        self._token = ''
+        self._door = door
+        self._token = '' # will be set in async context
+        self._index = door["index"]
+        self._serial = door["serial_number"]
 
         self._attr_device_info = DeviceInfo(
-            identifiers={(DOMAIN, f"{self._device["device_id"]}-{self._device["index"]}")},
-            name=device["name"],
-            manufacturer="Overhead Door",
-            model=device["model"],
+            identifiers={(DOMAIN, f"{self._door["device_id"]}-{self._door["index"]}")},
+            name=door["name"],
+            manufacturer=door["manufacturer"],
+            model=door["model"],
         )
-        self._attr_unique_id = f"{self._device["device_id"]}-{self._device["index"]}"
+        self._attr_unique_id = f"{self._door["device_id"]}-{self._door["index"]}"
 
     async def async_added_to_hass(self) -> None:
         """Connect Aladdin Connect to the cloud."""
         await self._ac.init_session()
-        await self._ac.subscribe(self._device, self.async_update)
+        self._token = await self._ac.subscribe(self._door, self.async_write_ha_state)
 
     async def async_will_remove_from_hass(self) -> None:
         """Close Aladdin Connect before removing."""
-        self._ac.unsubscribe(self._token, self._device)
+        self._ac.unsubscribe(self._token, self._door)
         await self._ac.close_session()
 
     async def async_close_cover(self, **kwargs: Any) -> None:
@@ -107,22 +110,22 @@ class AladdinDevice(CoverEntity):
         if not await self._ac.open_door(self._device_id, self._number):
             raise HomeAssistantError("Aladdin Connect API failed to open the cover")
 
-    async def async_update(self, update_info) -> None:
+    async def async_update(self) -> None:
         """Update status of cover."""
         try:
-            self._ac.log.debug(f"Recvd update for door: {update_info}")
+            await self._ac.get_doors(self._serial)
             self._attr_available = True
-
-        # TODO
-        # except (session_manager.ConnectionError, session_manager.InvalidPasswordError):
-        #     self._attr_available = False
-        except:
+        except ClientConnectionError or ClientResponseError as ce:
+            self._ac.log.error(f'[Cover] Async update failed due to client error: {ce}')
+            self._attr_available = False
+        except Exception as e:
+            self._ac.log.error(f'[Cover] Async update failed due to unknown error: {e}')
             self._attr_available = False
 
     @property
     def is_closed(self) -> bool | None:
         """Update is closed attribute."""
-        value = STATES_MAP.get(self._ac.get_door_status(self._device))
+        value = STATES_MAP.get(self._ac.get_door_status(self._door))
         if value is None:
             return None
         return value == STATE_CLOSED
@@ -131,7 +134,7 @@ class AladdinDevice(CoverEntity):
     def is_closing(self) -> bool:
         """Update is closing attribute."""
         return (
-            STATES_MAP.get(self._ac.get_door_status(self._device))
+            STATES_MAP.get(self._ac.get_door_status(self._door))
             == STATE_CLOSING
         )
 
@@ -139,6 +142,6 @@ class AladdinDevice(CoverEntity):
     def is_opening(self) -> bool:
         """Update is opening attribute."""
         return (
-            STATES_MAP.get(self._ac.get_door_status(self._device))
+            STATES_MAP.get(self._ac.get_door_status(self._door))
             == STATE_OPENING
         )

@@ -11,7 +11,7 @@ from homeassistant.core import HomeAssistant
 from .api import AladdinConnect
 from .const import DOMAIN
 
-TO_REDACT = {"serial", "device_id"}
+TO_REDACT = {"serial_number", "device_id"}
 
 
 async def async_get_config_entry_diagnostics(

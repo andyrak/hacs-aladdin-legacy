@@ -34,7 +34,7 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> None:
     """
     config = {
         'username': data[CONF_USERNAME],
-        'password': data[CONF_PASSWORD]
+        'password': data[CONF_PASSWORD],
     }
 
     ac = AladdinConnect(logger=_LOGGER, config=config)
@@ -42,11 +42,6 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> None:
         await ac.init_session()
     except (ClientError, TimeoutError):
         raise
-
-    # TODO
-    # except Aladdin.InvalidPasswordError as ex:
-    #     raise InvalidAuth from ex
-
 
 class AladdinConnectConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a config flow for Aladdin Connect."""
@@ -131,7 +126,6 @@ class AladdinConnectConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         return self.async_show_form(
             step_id="user", data_schema=STEP_USER_DATA_SCHEMA, errors=errors
         )
-
 
 class InvalidAuth(HomeAssistantError):
     """Error to indicate there is invalid auth."""

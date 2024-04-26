@@ -21,15 +21,15 @@ jobs:
         shell: "bash"
         run: |
           yq -i -o json '.version="${{ github.event.release.tag_name }}"' \
-            "${{ github.workspace }}/custom_components/aladdin_connect_legacy/manifest.json"
+            "${{ github.workspace }}/custom_components/aladdin_connect/manifest.json"
 
       - name: "ZIP the integration directory"
         shell: "bash"
         run: |
-          cd "${{ github.workspace }}/custom_components/aladdin_connect_legacy"
-          zip custom_components/aladdin_connect_legacy.zip -r ./
+          cd "${{ github.workspace }}/custom_components/aladdin_connect"
+          zip custom_components/aladdin_connect.zip -r ./
 
       - name: "Upload the ZIP file to the release"
         uses: softprops/action-gh-release@v2.0.4
         with:
-          files: ${{ github.workspace }}/custom_components/aladdin_connect_legacy.zip
+          files: ${{ github.workspace }}/custom_components/aladdin_connect.zip

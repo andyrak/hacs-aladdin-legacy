@@ -34,29 +34,9 @@ jobs:
         working-directory: "custom_components"
         run: zip -r aladdin_connect.zip aladdin_connect/*
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1.1.4  # Official Github action
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        with:
-          tag_name: 'tags/${{ github.ref_name }}'
-          release_name: ${{ github.ref }}
-          body: ${{ steps.changelog.outputs.changes }}
-          draft: false
-          prerelease: false
-
-      - name: Commit CHANGELOG.md
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          branch: main
-          commit_message: 'docs: update CHANGELOG.md for ${{ github.ref }} [skip ci]'
-          file_pattern: CHANGELOG.md
-
       - name: "Upload the ZIP file to the release"
         uses: softprops/action-gh-release@v2.0.4
         with:
           body: ${{ steps.changelog.outputs.changes }}
           token: ${{ secrets.GH_TOKEN }}
-          tag_name: 'tags/${{ github.ref_name }}'
           files: ./custom_components/aladdin_connect.zip

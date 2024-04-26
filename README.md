@@ -1,4 +1,11 @@
+![HACS Badge](https://img.shields.io/badge/hacs-custom-orange?link=https%3A%2F%2Fgithub.com%2Fhacs%2Fintegration)
+![Build Status](https://img.shields.io/github/actions/workflow/status/andyrak/hacs-aladdin-legacy/release.yml)
+![GitHub Release](https://img.shields.io/github/v/release/andyrak/hacs-aladdin-legacy)
+
 # hacs-aladdin-legacy
+
+## :warning::rotating_light::construction: WORK IN PROGRESS :construction::rotating_light::warning:
+4/22/2024 - This integration is currently not ready for use.
 
 ## Summary
 [Genie Aladdin Connect](https://www.geniecompany.com/aladdin-connect-by-genie) legacy plugin for Home Assistant via HACS.
@@ -6,14 +13,25 @@
 A workaround to use the legacy mechanisms while Aladdin works on their new API.
 
 ## Install
+
+### HACS Installation
 - Go to HACS -> Integrations
 - Click the three dots on the top right and select Custom Repositories
 - Enter https://github.com/andyrak/hacs-aladdin-legacy.git as repository, select the category Integration and click Add
 - A new custom integration shows up for installation (Aladdin Connect Legacy) - install it
 - Restart Home Assistant
 
+### Manual Installation
+Copy the contents of the `custom_components` folder to your Home Assistant `config/custom_components`
+folder and restart Home Assistant.
+
 ## Configuration
-TODO
+Configuration is managed entirely from the UI via `config_flow`.
+Simply go to Settings -> Devices & services -> Add Integration and search for "Aladdin Connect Legacy"
+in the search box.
+
+## Notes
+After installing, you will get the core Aladdin Connect integration deprecation warning; this can safely be ignored.
 
 ## Debugging
 To aquire debug-logs, add the following to your `configuration.yaml`:
@@ -21,7 +39,7 @@ To aquire debug-logs, add the following to your `configuration.yaml`:
 ```yaml
 logger:
   logs:
-    custom_components.aladdin_connect_legacy: debug
+    custom_components.aladdin_connect: debug
 ```
 
 Logs should now be available in `home-assistant.log`.

@@ -4,15 +4,14 @@ from __future__ import annotations
 
 from typing import Any
 
-from AIOAladdinConnect import AladdinConnectClient
-
-from homeassistant.components.diagnostics import async_redact_data
 from homeassistant import config_entries
+from homeassistant.components.diagnostics import async_redact_data
 from homeassistant.core import HomeAssistant
 
+from .api import AladdinConnect
 from .const import DOMAIN
 
-TO_REDACT = {"serial", "device_id"}
+TO_REDACT = {"serial_number", "device_id"}
 
 
 async def async_get_config_entry_diagnostics(
@@ -21,8 +20,8 @@ async def async_get_config_entry_diagnostics(
 ) -> dict[str, Any]:
     """Return diagnostics for a config entry."""
 
-    acc: AladdinConnectClient = hass.data[DOMAIN][config_entry.entry_id]
+    ac: AladdinConnect = hass.data[DOMAIN][config_entry.entry_id]
 
     return {
-        "doors": async_redact_data(acc.doors, TO_REDACT),
+        "doors": async_redact_data(ac.get_doors(), TO_REDACT),
     }

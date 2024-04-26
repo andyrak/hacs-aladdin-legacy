@@ -2,21 +2,21 @@
 
 from __future__ import annotations
 
+import logging
 from collections.abc import Mapping
-from typing import Any
+from typing import Any, Final
 
-from AIOAladdinConnect import AladdinConnectClient
-import AIOAladdinConnect.session_manager as Aladdin
-from aiohttp.client_exceptions import ClientError
 import voluptuous as vol
-
+from aiohttp.client_exceptions import ClientError
 from homeassistant import config_entries
 from homeassistant.const import CONF_PASSWORD, CONF_USERNAME
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import HomeAssistantError
-from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
-from .const import CLIENT_ID, DOMAIN
+from .api import AladdinConnect
+from .const import DOMAIN
+
+_LOGGER: Final = logging.getLogger(__name__)
 
 STEP_USER_DATA_SCHEMA = vol.Schema(
     {
@@ -27,26 +27,21 @@ STEP_USER_DATA_SCHEMA = vol.Schema(
 
 REAUTH_SCHEMA = vol.Schema({vol.Required(CONF_PASSWORD): str})
 
-
 async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> None:
     """Validate the user input allows us to connect.
 
     Data has the keys from STEP_USER_DATA_SCHEMA with values provided by the user.
     """
-    acc = AladdinConnectClient(
-        data[CONF_USERNAME],
-        data[CONF_PASSWORD],
-        async_get_clientsession(hass),
-        CLIENT_ID,
-    )
+    config = {
+        'username': data[CONF_USERNAME],
+        'password': data[CONF_PASSWORD],
+    }
+
+    ac = AladdinConnect(logger=_LOGGER, config=config)
     try:
-        await acc.login()
-    except (ClientError, TimeoutError, Aladdin.ConnectionError):
+        await ac.init_session()
+    except (ClientError, TimeoutError):
         raise
-
-    except Aladdin.InvalidPasswordError as ex:
-        raise InvalidAuth from ex
-
 
 class AladdinConnectConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a config flow for Aladdin Connect."""
@@ -82,7 +77,7 @@ class AladdinConnectConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             except InvalidAuth:
                 errors["base"] = "invalid_auth"
 
-            except (ClientError, TimeoutError, Aladdin.ConnectionError):
+            except (ClientError, TimeoutError):
                 errors["base"] = "cannot_connect"
 
             else:
@@ -118,7 +113,7 @@ class AladdinConnectConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         except InvalidAuth:
             errors["base"] = "invalid_auth"
 
-        except (ClientError, TimeoutError, Aladdin.ConnectionError):
+        except (ClientError, TimeoutError):
             errors["base"] = "cannot_connect"
 
         else:
@@ -131,7 +126,6 @@ class AladdinConnectConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         return self.async_show_form(
             step_id="user", data_schema=STEP_USER_DATA_SCHEMA, errors=errors
         )
-
 
 class InvalidAuth(HomeAssistantError):
     """Error to indicate there is invalid auth."""

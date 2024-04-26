@@ -2,7 +2,6 @@
 ![Build Status](https://img.shields.io/github/actions/workflow/status/andyrak/hacs-aladdin-legacy/release.yml)
 ![GitHub Release](https://img.shields.io/github/v/release/andyrak/hacs-aladdin-legacy)
 
-
 # hacs-aladdin-legacy
 
 ## :warning::rotating_light::construction: WORK IN PROGRESS :construction::rotating_light::warning:

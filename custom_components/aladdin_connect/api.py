@@ -10,7 +10,7 @@ from cachetools import TTLCache, cachedmethod
 from cachetools.keys import hashkey
 from pubsub import pub
 
-from .const import DoorCommand, DoorStatus, DOOR_LINK_STATUS, DOOR_STATUS, MODEL_MAP
+from .const import DOOR_LINK_STATUS, DOOR_STATUS, MODEL_MAP, DoorCommand, DoorStatus
 from .model import DoorDevice
 
 

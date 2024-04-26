@@ -8,6 +8,7 @@ from typing import Final
 from homeassistant.components.cover import CoverEntityFeature
 from homeassistant.const import STATE_CLOSED, STATE_CLOSING, STATE_OPEN, STATE_OPENING
 
+
 class DoorStatus(StrEnum):
     """Aladdin Connect door status."""
 

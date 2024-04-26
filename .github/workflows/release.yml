@@ -43,7 +43,7 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: ${{ github.ref }}
           body: ${{ steps.changelog.outputs.changes }}
-          draft: true
+          draft: false
           prerelease: false
 
       - name: Commit CHANGELOG.md
@@ -58,4 +58,4 @@ jobs:
         with:
           body: ${{ steps.changelog.outputs.changes }}
           token: ${{ secrets.GH_TOKEN }}
-          files: ${{ github.workspace }}/custom_components/aladdin_connect/aladdin_connect.zip
+          files: ./custom_components/aladdin_connect.zip

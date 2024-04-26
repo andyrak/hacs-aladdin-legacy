@@ -32,4 +32,4 @@ jobs:
       - name: "Upload the ZIP file to the release"
         uses: softprops/action-gh-release@v2.0.4
         with:
-          files: ${{ github.workspace }}/custom_components/aladdin_connect.zip
+          files: ${{ github.workspace }}/custom_components/aladdin_connect/aladdin_connect.zip

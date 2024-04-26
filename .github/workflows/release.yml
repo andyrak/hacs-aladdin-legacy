@@ -40,7 +40,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
+          tag_name: 'tags/${{ github.ref_name }}'
           release_name: ${{ github.ref }}
           body: ${{ steps.changelog.outputs.changes }}
           draft: false
@@ -58,4 +58,5 @@ jobs:
         with:
           body: ${{ steps.changelog.outputs.changes }}
           token: ${{ secrets.GH_TOKEN }}
+          tag_name: 'tags/${{ github.ref_name }}'
           files: ./custom_components/aladdin_connect.zip

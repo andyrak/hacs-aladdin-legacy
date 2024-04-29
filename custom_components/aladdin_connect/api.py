@@ -5,7 +5,6 @@ import hmac
 from collections.abc import Callable
 from functools import partial
 
-import aiohttp
 from cachetools import TTLCache, cachedmethod
 from cachetools.keys import hashkey
 from pubsub import pub

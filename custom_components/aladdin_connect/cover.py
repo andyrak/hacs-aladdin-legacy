@@ -78,7 +78,7 @@ class AladdinDevice(CoverEntity):
         """Initialize the Aladdin Connect cover."""
         self._ac = ac
         self._door = door
-        self._token = '' # will be set in async context
+        self._listener = '' # will be set in async context
         self._index = door["index"]
         self._serial = door["serial_number"]
 
@@ -92,12 +92,11 @@ class AladdinDevice(CoverEntity):
 
     async def async_added_to_hass(self) -> None:
         """Connect Aladdin Connect to the cloud."""
-        await self._ac.init_session()
-        self._token = await self._ac.subscribe(self._door, self.async_write_ha_state)
+        self._listener = await self._ac.subscribe(self._door, self.async_write_ha_state)
 
     async def async_will_remove_from_hass(self) -> None:
         """Close Aladdin Connect before removing."""
-        self._ac.unsubscribe(self._token, self._door)
+        self._ac.unsubscribe(self._listener, self._door)
         await self._ac.close_session()
 
     async def async_close_cover(self, **kwargs: Any) -> None:

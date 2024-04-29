@@ -33,12 +33,12 @@ class AladdinConnect:
     DOOR_STATUS_TRANSITIONING_CACHE_TTL_S_MIN = 1
     PUB_SUB_DOOR_STATUS_TOPIC = 'door'
 
-    def __init__(self, logger, config):
+    def __init__(self, logger, session, config):
         """Set up base information."""
         self._cache = TTLCache(maxsize=1024, ttl=3600)  # Example settings
         self._config = config
         self._doors: list[DoorDevice] = []
-        self._session = None  # Will be set in the async context
+        self._session = session
         self.log = logger
 
 
@@ -205,11 +205,6 @@ class AladdinConnect:
         """Close session and connection."""
         if self._session:
             await self._session.close()
-
-    async def init_session(self):
-        """Open session and connection."""
-        if self._session is None:
-            self._session = aiohttp.ClientSession()
 
     def door_status_stationary_cache_ttl(self):
         """Compute TTL for stationary door status, with bounds checking."""

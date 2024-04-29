@@ -1,0 +1,35 @@
+{
+    "title": "Aladdin Connect Legacy",
+    "config": {
+        "step": {
+            "user": {
+                "description": "Wann Dir Hëllef braucht mat der Konfiguratioun, kuckt hei: https://github.com/andyrak/hacs-aladdin-legacy",
+                "data": {
+                    "username": "Benotzernumm",
+                    "password": "Passwuert"
+                }
+            }
+        },
+        "error": {
+            "auth": "Benotzernumm / Passwuert ass falsch.",
+            "connection": "Kann net mam Server konnektéieren.",
+            "unknown": "Onbekannte Feeler ass geschitt."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "BLE Kraaft"
+            },
+            "software_version": {
+                "name": "Software Versioun"
+            },
+            "wifi_rssi": {
+                "name": "Wi-Fi RSSI"
+            },
+            "wifi_ssid": {
+                "name": "Wi-Fi BSSID"
+            }
+        }
+    }
+}

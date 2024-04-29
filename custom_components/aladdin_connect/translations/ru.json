@@ -1,0 +1,35 @@
+{
+    "title": "Аладдин Коннект Наследие",
+    "config": {
+        "step": {
+            "user": {
+                "description": "Если вам нужна помощь с настройкой, загляните сюда: https://github.com/andyrak/hacs-aladdin-legacy.",
+                "data": {
+                    "username": "Имя пользователя",
+                    "password": "Пароль"
+                }
+            }
+        },
+        "error": {
+            "auth": "Имя пользователя/пароль неверны.",
+            "connection": "Невозможно подключиться к серверу.",
+            "unknown": "Произошла неизвестная ошибка."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "Сила BLE"
+            },
+            "software_version": {
+                "name": "Версия ПО"
+            },
+            "wifi_rssi": {
+                "name": "RSSI Wi-Fi"
+            },
+            "wifi_ssid": {
+                "name": "BSSID Wi-Fi"
+            }
+        }
+    }
+}

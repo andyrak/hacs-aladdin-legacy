@@ -1,0 +1,35 @@
+{
+    "title": "Aladdin Connect Legacy",
+    "config": {
+        "step": {
+            "user": {
+                "description": "Jei reikia pagalbos dėl konfigūracijos, pažiūrėkite čia: https://github.com/andyrak/hacs-aladdin-legacy",
+                "data": {
+                    "username": "Vartotojo vardas",
+                    "password": "Slaptažodis"
+                }
+            }
+        },
+        "error": {
+            "auth": "Neteisingas vartotojo vardas / slaptažodis.",
+            "connection": "Nepavyko prisijungti prie serverio.",
+            "unknown": "Įvyko nežinoma klaida."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "BLE stiprumas"
+            },
+            "software_version": {
+                "name": "Programinės įrangos versija"
+            },
+            "wifi_rssi": {
+                "name": "Wi-Fi RSSI"
+            },
+            "wifi_ssid": {
+                "name": "„Wi-Fi“ BSSID"
+            }
+        }
+    }
+}

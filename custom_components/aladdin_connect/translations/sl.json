@@ -1,0 +1,35 @@
+{
+    "title": "Aladdin Connect Legacy",
+    "config": {
+        "step": {
+            "user": {
+                "description": "Če potrebujete pomoč pri konfiguraciji, poglejte tukaj: https://github.com/andyrak/hacs-aladdin-legacy",
+                "data": {
+                    "username": "Uporabniško ime",
+                    "password": "Geslo"
+                }
+            }
+        },
+        "error": {
+            "auth": "Uporabniško ime/geslo je napačno.",
+            "connection": "Ni mogoče vzpostaviti povezave s strežnikom.",
+            "unknown": "Prišlo je do neznane napake."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "Moč BLE"
+            },
+            "software_version": {
+                "name": "Različica programske opreme"
+            },
+            "wifi_rssi": {
+                "name": "Wi-Fi RSSI"
+            },
+            "wifi_ssid": {
+                "name": "Wi-Fi BSSID"
+            }
+        }
+    }
+}

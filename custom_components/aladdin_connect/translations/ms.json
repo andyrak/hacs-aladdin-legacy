@@ -1,0 +1,35 @@
+{
+    "title": "Legasi Aladdin Connect",
+    "config": {
+        "step": {
+            "user": {
+                "description": "Jika anda memerlukan bantuan dengan konfigurasi, lihat di sini: https://github.com/andyrak/hacs-aladdin-legacy",
+                "data": {
+                    "username": "Nama pengguna",
+                    "password": "Kata laluan"
+                }
+            }
+        },
+        "error": {
+            "auth": "Nama pengguna/Kata Laluan adalah salah.",
+            "connection": "Tidak dapat menyambung ke pelayan.",
+            "unknown": "Ralat tidak diketahui berlaku."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "Kekuatan BLE"
+            },
+            "software_version": {
+                "name": "Versi Perisian"
+            },
+            "wifi_rssi": {
+                "name": "Wi-Fi RSSI"
+            },
+            "wifi_ssid": {
+                "name": "Wi-Fi BSSID"
+            }
+        }
+    }
+}

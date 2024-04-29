@@ -1,0 +1,35 @@
+{
+    "title": "Aladdin Connect Legacy",
+    "config": {
+        "step": {
+            "user": {
+                "description": "As jy hulp nodig het met die konfigurasie, kyk hier: https://github.com/andyrak/hacs-aladdin-legacy",
+                "data": {
+                    "username": "Gebruikersnaam",
+                    "password": "Wagwoord"
+                }
+            }
+        },
+        "error": {
+            "auth": "Gebruikersnaam/wagwoord is verkeerd.",
+            "connection": "Kan nie aan die bediener koppel nie.",
+            "unknown": "Onbekende fout het voorgekom."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "BLE Sterkte"
+            },
+            "software_version": {
+                "name": "Sagteware weergawe"
+            },
+            "wifi_rssi": {
+                "name": "Wi-Fi RSSI"
+            },
+            "wifi_ssid": {
+                "name": "Wi-Fi BSSID"
+            }
+        }
+    }
+}

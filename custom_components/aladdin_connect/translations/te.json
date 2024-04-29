@@ -1,0 +1,35 @@
+{
+    "title": "అల్లాదీన్ కనెక్ట్ లెగసీ",
+    "config": {
+        "step": {
+            "user": {
+                "description": "మీకు కాన్ఫిగరేషన్‌తో సహాయం కావాలంటే ఇక్కడ చూడండి: https://github.com/andyrak/hacs-aladdin-legacy",
+                "data": {
+                    "username": "వినియోగదారు పేరు",
+                    "password": "పాస్వర్డ్"
+                }
+            }
+        },
+        "error": {
+            "auth": "వినియోగదారు పేరు/పాస్‌వర్డ్ తప్పు.",
+            "connection": "సర్వర్‌కి కనెక్ట్ చేయడం సాధ్యపడలేదు.",
+            "unknown": "తెలియని లోపం సంభవించింది."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "BLE బలం"
+            },
+            "software_version": {
+                "name": "సాఫ్ట్‌వేర్ వెర్షన్"
+            },
+            "wifi_rssi": {
+                "name": "Wi-Fi RSSI"
+            },
+            "wifi_ssid": {
+                "name": "Wi-Fi BSSID"
+            }
+        }
+    }
+}

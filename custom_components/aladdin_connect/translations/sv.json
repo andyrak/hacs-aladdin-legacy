@@ -1,0 +1,35 @@
+{
+    "title": "Aladdin Connect Legacy",
+    "config": {
+        "step": {
+            "user": {
+                "description": "Om du behöver hjälp med konfigurationen, ta en titt här: https://github.com/andyrak/hacs-aladdin-legacy",
+                "data": {
+                    "username": "Användarnamn",
+                    "password": "Lösenord"
+                }
+            }
+        },
+        "error": {
+            "auth": "Användarnamn/lösenord är fel.",
+            "connection": "Kan inte ansluta till servern.",
+            "unknown": "Okänt fel har inträffat."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "BLE Styrka"
+            },
+            "software_version": {
+                "name": "Mjukvaru-version"
+            },
+            "wifi_rssi": {
+                "name": "Wi-Fi RSSI"
+            },
+            "wifi_ssid": {
+                "name": "Wi-Fi BSSID"
+            }
+        }
+    }
+}

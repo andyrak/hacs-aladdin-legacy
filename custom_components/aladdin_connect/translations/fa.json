@@ -1,0 +1,35 @@
+{
+    "title": "Aladdin Connect Legacy",
+    "config": {
+        "step": {
+            "user": {
+                "description": "اگر در مورد پیکربندی به کمک نیاز دارید، به اینجا نگاه کنید: https://github.com/andyrak/hacs-aladdin-legacy",
+                "data": {
+                    "username": "نام کاربری",
+                    "password": "کلمه عبور"
+                }
+            }
+        },
+        "error": {
+            "auth": "نام کاربری/رمز عبور اشتباه است.",
+            "connection": "نمیتوانید به سرور متصل شوید.",
+            "unknown": "خطای ناشناخته رخ داد."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "قدرت BLE"
+            },
+            "software_version": {
+                "name": "نسخهی نرم افزار"
+            },
+            "wifi_rssi": {
+                "name": "وای فای RSSI"
+            },
+            "wifi_ssid": {
+                "name": "Wi-Fi BSSID"
+            }
+        }
+    }
+}

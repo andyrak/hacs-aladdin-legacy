@@ -1,0 +1,35 @@
+{
+    "title": "Aladdin Connect Legacy",
+    "config": {
+        "step": {
+            "user": {
+                "description": "Kui vajate seadistamisel abi, vaadake siit: https://github.com/andyrak/hacs-aladdin-legacy",
+                "data": {
+                    "username": "Kasutajanimi",
+                    "password": "Parool"
+                }
+            }
+        },
+        "error": {
+            "auth": "Kasutajanimi/parool on vale.",
+            "connection": "Serveriga ei saa ühendust luua.",
+            "unknown": "Ilmnes tundmatu viga."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "BLE tugevus"
+            },
+            "software_version": {
+                "name": "Tarkvara versioon"
+            },
+            "wifi_rssi": {
+                "name": "Wi-Fi RSSI"
+            },
+            "wifi_ssid": {
+                "name": "Wi-Fi BSSID"
+            }
+        }
+    }
+}

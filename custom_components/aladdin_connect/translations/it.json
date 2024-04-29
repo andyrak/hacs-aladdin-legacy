@@ -1,0 +1,35 @@
+{
+    "title": "L'eredità di Aladdin Connect",
+    "config": {
+        "step": {
+            "user": {
+                "description": "Se hai bisogno di aiuto con la configurazione dai un'occhiata qui: https://github.com/andyrak/hacs-aladdin-legacy",
+                "data": {
+                    "username": "Nome utente",
+                    "password": "Parola d'ordine"
+                }
+            }
+        },
+        "error": {
+            "auth": "Nome utente/password errati.",
+            "connection": "Impossibile connettersi al server.",
+            "unknown": "Errore sconosciuto."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "Forza BLE"
+            },
+            "software_version": {
+                "name": "Versione software"
+            },
+            "wifi_rssi": {
+                "name": "RSSI Wi-Fi"
+            },
+            "wifi_ssid": {
+                "name": "BSSID Wi-Fi"
+            }
+        }
+    }
+}

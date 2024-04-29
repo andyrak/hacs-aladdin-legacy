@@ -1,0 +1,35 @@
+{
+    "title": "Aladdin Connect Legacy",
+    "config": {
+        "step": {
+            "user": {
+                "description": "Εάν χρειάζεστε βοήθεια με τη διαμόρφωση, ρίξτε μια ματιά εδώ: https://github.com/andyrak/hacs-aladdin-legacy",
+                "data": {
+                    "username": "Όνομα χρήστη",
+                    "password": "Κωδικός πρόσβασης"
+                }
+            }
+        },
+        "error": {
+            "auth": "Το όνομα χρήστη/κωδικός πρόσβασης είναι λάθος.",
+            "connection": "Δεν είναι δυνατή η σύνδεση στον διακομιστή.",
+            "unknown": "Παρουσιάστηκε άγνωστο σφάλμα."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "Δύναμη BLE"
+            },
+            "software_version": {
+                "name": "Εκδοση ΛΟΓΙΣΜΙΚΟΥ"
+            },
+            "wifi_rssi": {
+                "name": "Wi-Fi RSSI"
+            },
+            "wifi_ssid": {
+                "name": "Wi-Fi BSSID"
+            }
+        }
+    }
+}

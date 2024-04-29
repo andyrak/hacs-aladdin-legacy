@@ -1,0 +1,35 @@
+{
+    "title": "Aladdin Connect Legacy",
+    "config": {
+        "step": {
+            "user": {
+                "description": "Konfiguraziorako laguntza behar baduzu, begiratu hemen: https://github.com/andyrak/hacs-aladdin-legacy",
+                "data": {
+                    "username": "Erabiltzaile izena",
+                    "password": "Pasahitza"
+                }
+            }
+        },
+        "error": {
+            "auth": "Erabiltzaile-izena/Pasahitza oker dago.",
+            "connection": "Ezin da zerbitzariarekin konektatu.",
+            "unknown": "Errore ezezaguna gertatu da."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "BLE Indarra"
+            },
+            "software_version": {
+                "name": "Software bertsioa"
+            },
+            "wifi_rssi": {
+                "name": "Wi-Fi RSSI"
+            },
+            "wifi_ssid": {
+                "name": "Wi-Fi BSSID"
+            }
+        }
+    }
+}

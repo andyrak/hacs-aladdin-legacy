@@ -1,0 +1,35 @@
+{
+    "title": "അലാഡിൻ കണക്റ്റ് ലെഗസി",
+    "config": {
+        "step": {
+            "user": {
+                "description": "കോൺഫിഗറേഷനിൽ നിങ്ങൾക്ക് സഹായം ആവശ്യമുണ്ടെങ്കിൽ ഇവിടെ നോക്കുക: https://github.com/andyrak/hacs-aladdin-legacy",
+                "data": {
+                    "username": "ഉപയോക്തൃനാമം",
+                    "password": "Password"
+                }
+            }
+        },
+        "error": {
+            "auth": "ഉപയോക്തൃനാമം/പാസ്‌വേഡ് തെറ്റാണ്.",
+            "connection": "സെർവറിലേക്ക് കണക്റ്റുചെയ്യാനായില്ല.",
+            "unknown": "അജ്ഞാത പിശക് സംഭവിച്ചു."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "BLE ശക്തി"
+            },
+            "software_version": {
+                "name": "സോഫ്റ്റ്വെയർ പതിപ്പ്"
+            },
+            "wifi_rssi": {
+                "name": "Wi-Fi RSSI"
+            },
+            "wifi_ssid": {
+                "name": "Wi-Fi BSSID"
+            }
+        }
+    }
+}

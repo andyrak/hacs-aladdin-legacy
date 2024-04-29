@@ -149,14 +149,14 @@ class AladdinConnect:
                     response.raise_for_status()
 
                 data = await response.json()
-                if self._config.get('logApiResponses', False):
-                    self.log.debug(f'[API] Genie {command} response: {data}')
+                self.log.debug(f'[API] Genie {command} response: {data}')
 
         except Exception as error:
             self.log.error(f'[API] An error occurred sending command {command} to door {door["name"]}; {error}')
-            raise
+            return False
 
         await self.invalidate_door_cache(door)
+        return True
 
     def get_battery_status(self, door: DoorDevice):
         """Get battery status for a door."""

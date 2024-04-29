@@ -1,0 +1,35 @@
+{
+    "title": "Aladdin કનેક્ટ લેગસી",
+    "config": {
+        "step": {
+            "user": {
+                "description": "જો તમને ગોઠવણીમાં મદદ જોઈતી હોય તો અહીં જુઓ: https://github.com/andyrak/hacs-aladdin-legacy",
+                "data": {
+                    "username": "વપરાશકર્તા નામ",
+                    "password": "પાસવર્ડ"
+                }
+            }
+        },
+        "error": {
+            "auth": "વપરાશકર્તા નામ/પાસવર્ડ ખોટો છે.",
+            "connection": "સર્વર સાથે કનેક્ટ કરવામાં અસમર્થ.",
+            "unknown": "અજાણી ભૂલ આવી."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "BLE સ્ટ્રેન્થ"
+            },
+            "software_version": {
+                "name": "સૉફ્ટવેર સંસ્કરણ"
+            },
+            "wifi_rssi": {
+                "name": "Wi-Fi RSSI"
+            },
+            "wifi_ssid": {
+                "name": "Wi-Fi BSSID"
+            }
+        }
+    }
+}

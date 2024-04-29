@@ -1,0 +1,35 @@
+{
+    "title": "Aladdin Connect-erfenis",
+    "config": {
+        "step": {
+            "user": {
+                "description": "Als je hulp nodig hebt bij de configuratie, kijk dan hier: https://github.com/andyrak/hacs-aladdin-legacy",
+                "data": {
+                    "username": "Gebruikersnaam",
+                    "password": "Wachtwoord"
+                }
+            }
+        },
+        "error": {
+            "auth": "Gebruikersnaam/wachtwoord is verkeerd.",
+            "connection": "Kan niet verbinden met de server.",
+            "unknown": "Er is een onbekende fout opgetreden."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "BLE-sterkte"
+            },
+            "software_version": {
+                "name": "Software versie"
+            },
+            "wifi_rssi": {
+                "name": "Wi-Fi RSSI"
+            },
+            "wifi_ssid": {
+                "name": "Wi-Fi-BSSID"
+            }
+        }
+    }
+}

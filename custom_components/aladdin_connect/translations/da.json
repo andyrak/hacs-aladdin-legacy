@@ -1,0 +1,35 @@
+{
+    "title": "Aladdin Connect Legacy",
+    "config": {
+        "step": {
+            "user": {
+                "description": "Hvis du har brug for hjælp til konfigurationen, så kig her: https://github.com/andyrak/hacs-aladdin-legacy",
+                "data": {
+                    "username": "Brugernavn",
+                    "password": "Adgangskode"
+                }
+            }
+        },
+        "error": {
+            "auth": "Brugernavn/adgangskode er forkert.",
+            "connection": "Kan ikke oprette forbindelse til serveren.",
+            "unknown": "Der opstod en ukendt fejl."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "BLE Styrke"
+            },
+            "software_version": {
+                "name": "Softwareversion"
+            },
+            "wifi_rssi": {
+                "name": "Wi-Fi RSSI"
+            },
+            "wifi_ssid": {
+                "name": "Wi-Fi BSSID"
+            }
+        }
+    }
+}

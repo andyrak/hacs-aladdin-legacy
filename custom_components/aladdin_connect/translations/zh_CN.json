@@ -1,0 +1,35 @@
+{
+    "title": "阿拉丁连接遗产",
+    "config": {
+        "step": {
+            "user": {
+                "description": "如果您需要配置方面的帮助，请查看此处：https：//github.com/andyrak/hacs-aladdin-legacy",
+                "data": {
+                    "username": "用户名",
+                    "password": "密码"
+                }
+            }
+        },
+        "error": {
+            "auth": "用户名/密码错误。",
+            "connection": "无法连接到服务器。",
+            "unknown": "发生未知错误。"
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "BLE 优势"
+            },
+            "software_version": {
+                "name": "软件版本"
+            },
+            "wifi_rssi": {
+                "name": "无线网络 RSSI"
+            },
+            "wifi_ssid": {
+                "name": "无线网络 BSSID"
+            }
+        }
+    }
+}

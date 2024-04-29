@@ -1,0 +1,35 @@
+{
+    "title": "阿拉丁連結遺產",
+    "config": {
+        "step": {
+            "user": {
+                "description": "如果您需要設定協助，請查看此處：https://github.com/andyrak/hacs-aladdin-legacy",
+                "data": {
+                    "username": "使用者名稱",
+                    "password": "密碼"
+                }
+            }
+        },
+        "error": {
+            "auth": "使用者名稱/密碼錯誤。",
+            "connection": "無法連接到伺服器。",
+            "unknown": "發生未知錯誤。"
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "BLE 實力"
+            },
+            "software_version": {
+                "name": "軟體版本"
+            },
+            "wifi_rssi": {
+                "name": "無線網路接收訊號強度指示"
+            },
+            "wifi_ssid": {
+                "name": "無線網路 BSSID"
+            }
+        }
+    }
+}

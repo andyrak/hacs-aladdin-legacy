@@ -1,0 +1,35 @@
+{
+    "title": "Aladdin Connect'in Mirası",
+    "config": {
+        "step": {
+            "user": {
+                "description": "Yapılandırmayla ilgili yardıma ihtiyacınız varsa buraya bir göz atın: https://github.com/andyrak/hacs-aladdin-legacy",
+                "data": {
+                    "username": "Kullanıcı adı",
+                    "password": "Şifre"
+                }
+            }
+        },
+        "error": {
+            "auth": "Kullanıcı Adı/Şifre yanlış.",
+            "connection": "Sunucuya bağlanılamıyor.",
+            "unknown": "Bilinmeyen hata oluştu."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "BLE Gücü"
+            },
+            "software_version": {
+                "name": "Yazılım versiyonu"
+            },
+            "wifi_rssi": {
+                "name": "Wi-Fi RSSI'sı"
+            },
+            "wifi_ssid": {
+                "name": "Wi-Fi BSSID'si"
+            }
+        }
+    }
+}

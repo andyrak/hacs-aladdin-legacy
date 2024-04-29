@@ -1,0 +1,35 @@
+{
+    "title": "Aladdin Connect Legacy",
+    "config": {
+        "step": {
+            "user": {
+                "description": "Ak potrebujete pomoc s konfiguráciou, pozrite sa sem: https://github.com/andyrak/hacs-aladdin-legacy",
+                "data": {
+                    "username": "Používateľské meno",
+                    "password": "heslo"
+                }
+            }
+        },
+        "error": {
+            "auth": "Používateľské meno/heslo je nesprávne.",
+            "connection": "Nedá sa pripojiť k serveru.",
+            "unknown": "Vyskytla sa neznáma chyba."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "Sila BLE"
+            },
+            "software_version": {
+                "name": "Verzia softvéru"
+            },
+            "wifi_rssi": {
+                "name": "Wi-Fi RSSI"
+            },
+            "wifi_ssid": {
+                "name": "Wi-Fi BSSID"
+            }
+        }
+    }
+}

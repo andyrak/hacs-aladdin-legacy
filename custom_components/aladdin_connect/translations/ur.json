@@ -1,0 +1,35 @@
+{
+    "title": "علاء کنیکٹ لیگیسی",
+    "config": {
+        "step": {
+            "user": {
+                "description": "اگر آپ کو ترتیب میں مدد کی ضرورت ہو تو یہاں ایک نظر ڈالیں: https://github.com/andyrak/hacs-aladdin-legacy",
+                "data": {
+                    "username": "صارف نام",
+                    "password": "پاس ورڈ"
+                }
+            }
+        },
+        "error": {
+            "auth": "صارف نام/پاس ورڈ غلط ہے۔",
+            "connection": "سرور سے جڑنے سے قاصر۔",
+            "unknown": "نامعلوم خرابی پیش آگئی۔"
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "BLE طاقت"
+            },
+            "software_version": {
+                "name": "سافٹ ویئر ورژن"
+            },
+            "wifi_rssi": {
+                "name": "Wi-Fi RSSI"
+            },
+            "wifi_ssid": {
+                "name": "Wi-Fi BSSID"
+            }
+        }
+    }
+}

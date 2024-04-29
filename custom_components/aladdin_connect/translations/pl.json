@@ -1,0 +1,35 @@
+{
+    "title": "Dziedzictwo Aladyna Connect",
+    "config": {
+        "step": {
+            "user": {
+                "description": "Jeśli potrzebujesz pomocy w konfiguracji, zajrzyj tutaj: https://github.com/andyrak/hacs-aladdin-legacy",
+                "data": {
+                    "username": "Nazwa użytkownika",
+                    "password": "Hasło"
+                }
+            }
+        },
+        "error": {
+            "auth": "Nazwa użytkownika/hasło jest nieprawidłowe.",
+            "connection": "Nie można połączyć się z serwerem.",
+            "unknown": "Wystąpił nieznany błąd."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "Siła BLE"
+            },
+            "software_version": {
+                "name": "Wersja oprogramowania"
+            },
+            "wifi_rssi": {
+                "name": "Wi-Fi RSSI"
+            },
+            "wifi_ssid": {
+                "name": "BSSID Wi-Fi"
+            }
+        }
+    }
+}

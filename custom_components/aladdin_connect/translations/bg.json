@@ -1,0 +1,35 @@
+{
+    "title": "Aladdin Connect Legacy",
+    "config": {
+        "step": {
+            "user": {
+                "description": "Ако имате нужда от помощ с конфигурацията, погледнете тук: https://github.com/andyrak/hacs-aladdin-legacy",
+                "data": {
+                    "username": "Потребителско име",
+                    "password": "Парола"
+                }
+            }
+        },
+        "error": {
+            "auth": "Потребителското име/паролата е грешно.",
+            "connection": "Не може да се свърже със сървъра.",
+            "unknown": "Възникна неизвестна грешка."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "Сила на BLE"
+            },
+            "software_version": {
+                "name": "Софтуерна версия"
+            },
+            "wifi_rssi": {
+                "name": "Wi-Fi RSSI"
+            },
+            "wifi_ssid": {
+                "name": "Wi-Fi BSSID"
+            }
+        }
+    }
+}

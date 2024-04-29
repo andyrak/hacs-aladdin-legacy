@@ -1,0 +1,35 @@
+{
+    "title": "Aladdin Connect Legacy",
+    "config": {
+        "step": {
+            "user": {
+                "description": "Dacă aveți nevoie de ajutor cu configurarea, aruncați o privire aici: https://github.com/andyrak/hacs-aladdin-legacy",
+                "data": {
+                    "username": "Nume de utilizator",
+                    "password": "Parola"
+                }
+            }
+        },
+        "error": {
+            "auth": "Numele de utilizator/parola este greșit.",
+            "connection": "Nu se poate conecta la server.",
+            "unknown": "A apărut o eroare necunoscută."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "Puterea BLE"
+            },
+            "software_version": {
+                "name": "Versiune software"
+            },
+            "wifi_rssi": {
+                "name": "Wi-Fi RSSI"
+            },
+            "wifi_ssid": {
+                "name": "BSSID Wi-Fi"
+            }
+        }
+    }
+}

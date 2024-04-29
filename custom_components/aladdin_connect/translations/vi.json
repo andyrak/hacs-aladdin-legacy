@@ -1,0 +1,35 @@
+{
+    "title": "Di sản kết nối Aladdin",
+    "config": {
+        "step": {
+            "user": {
+                "description": "Nếu bạn cần trợ giúp về cấu hình, hãy xem tại đây: https://github.com/andyrak/hacs-aladdin-legacy",
+                "data": {
+                    "username": "tên tài khoản",
+                    "password": "Mật khẩu"
+                }
+            }
+        },
+        "error": {
+            "auth": "Tên người dùng/Mật khẩu sai.",
+            "connection": "Không thể kết nối đến máy chủ.",
+            "unknown": "Xảy ra lỗi không xác định được."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "Sức mạnh BLE"
+            },
+            "software_version": {
+                "name": "Phiên bản phần mềm"
+            },
+            "wifi_rssi": {
+                "name": "Wi-Fi RSSI"
+            },
+            "wifi_ssid": {
+                "name": "BSSID Wi-Fi"
+            }
+        }
+    }
+}

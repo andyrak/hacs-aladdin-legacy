@@ -1,0 +1,35 @@
+{
+    "title": "अलादीन कनेक्ट लिगेसी",
+    "config": {
+        "step": {
+            "user": {
+                "description": "यदि आपको कॉन्फ़िगरेशन में सहायता की आवश्यकता है तो यहां देखें: https://github.com/andyrak/hacs-aladdin-legacy",
+                "data": {
+                    "username": "उपयोगकर्ता नाम",
+                    "password": "पासवर्ड"
+                }
+            }
+        },
+        "error": {
+            "auth": "उपयोगकर्ता नाम/पासवर्ड ग़लत है.",
+            "connection": "सर्वर से कनेक्ट करने में अक्षम।",
+            "unknown": "अज्ञात त्रुटि हुई।"
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "बीएलई शक्ति"
+            },
+            "software_version": {
+                "name": "सॉफ्टवेयर संस्करण"
+            },
+            "wifi_rssi": {
+                "name": "वाई-फाई आरएसएसआई"
+            },
+            "wifi_ssid": {
+                "name": "वाई-फाई BSSID"
+            }
+        }
+    }
+}

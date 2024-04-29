@@ -1,0 +1,35 @@
+{
+    "title": "আলাদিন কানেক্ট লিগ্যাসি",
+    "config": {
+        "step": {
+            "user": {
+                "description": "কনফিগারেশনের জন্য আপনার সাহায্যের প্রয়োজন হলে এখানে দেখুন: https://github.com/andyrak/hacs-aladdin-legacy",
+                "data": {
+                    "username": "ব্যবহারকারীর নাম",
+                    "password": "পাসওয়ার্ড"
+                }
+            }
+        },
+        "error": {
+            "auth": "ব্যবহারকারীর নাম/পাসওয়ার্ড ভুল।",
+            "connection": "সার্ভারের সাথে সংযোগ স্থাপন করতে অক্ষম.",
+            "unknown": "অজানা ত্রুটি ঘটেছে."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "BLE শক্তি"
+            },
+            "software_version": {
+                "name": "সফ্টওয়্যার সংস্করণ"
+            },
+            "wifi_rssi": {
+                "name": "ওয়াই-ফাই আরএসএসআই"
+            },
+            "wifi_ssid": {
+                "name": "Wi-Fi BSSID"
+            }
+        }
+    }
+}

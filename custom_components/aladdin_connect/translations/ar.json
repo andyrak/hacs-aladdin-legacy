@@ -1,0 +1,35 @@
+{
+    "title": "علاء الدين اتصال تراث",
+    "config": {
+        "step": {
+            "user": {
+                "description": "إذا كنت بحاجة إلى مساعدة في التكوين، فقم بإلقاء نظرة هنا: https://github.com/andyrak/hacs-aladdin-legacy",
+                "data": {
+                    "username": "اسم المستخدم",
+                    "password": "كلمة المرور"
+                }
+            }
+        },
+        "error": {
+            "auth": "اسم المستخدم/كلمة المرور خاطئة.",
+            "connection": "غير قادر على الاتصال بالخادم.",
+            "unknown": "حدث خطأ غير معروف."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "قوة بليه"
+            },
+            "software_version": {
+                "name": "إصدار البرنامج"
+            },
+            "wifi_rssi": {
+                "name": "واي فاي آر إس إس آي"
+            },
+            "wifi_ssid": {
+                "name": "واي فاي BSSID"
+            }
+        }
+    }
+}

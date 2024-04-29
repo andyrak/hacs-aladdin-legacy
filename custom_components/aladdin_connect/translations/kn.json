@@ -1,0 +1,35 @@
+{
+    "title": "ಅಲ್ಲಾದೀನ್ ಕನೆಕ್ಟ್ ಲೆಗಸಿ",
+    "config": {
+        "step": {
+            "user": {
+                "description": "ನಿಮಗೆ ಕಾನ್ಫಿಗರೇಶನ್‌ಗೆ ಸಹಾಯ ಬೇಕಾದರೆ ಇಲ್ಲಿ ನೋಡಿ: https://github.com/andyrak/hacs-aladdin-legacy",
+                "data": {
+                    "username": "ಬಳಕೆದಾರ ಹೆಸರು",
+                    "password": "ಗುಪ್ತಪದ"
+                }
+            }
+        },
+        "error": {
+            "auth": "ಬಳಕೆದಾರಹೆಸರು/ಪಾಸ್‌ವರ್ಡ್ ತಪ್ಪಾಗಿದೆ.",
+            "connection": "ಸರ್ವರ್‌ಗೆ ಸಂಪರ್ಕಿಸಲು ಸಾಧ್ಯವಾಗುತ್ತಿಲ್ಲ.",
+            "unknown": "ಅಜ್ಞಾತ ದೋಷ ಸಂಭವಿಸಿದೆ."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "BLE ಸಾಮರ್ಥ್ಯ"
+            },
+            "software_version": {
+                "name": "ಸಾಫ್ಟ್ವೇರ್ ಆವೃತ್ತಿ"
+            },
+            "wifi_rssi": {
+                "name": "Wi-Fi RSSI"
+            },
+            "wifi_ssid": {
+                "name": "Wi-Fi BSSID"
+            }
+        }
+    }
+}

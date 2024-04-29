@@ -1,0 +1,35 @@
+{
+    "title": "Aladdin Connect Legacy",
+    "config": {
+        "step": {
+            "user": {
+                "description": "Jos tarvitset apua määritykseen, katso täältä: https://github.com/andyrak/hacs-aladdin-legacy",
+                "data": {
+                    "username": "Käyttäjätunnus",
+                    "password": "Salasana"
+                }
+            }
+        },
+        "error": {
+            "auth": "Käyttäjätunnus/salasana on väärä.",
+            "connection": "Ei voida muodostaa yhteyttä palvelimeen.",
+            "unknown": "Tapahtui tuntematon virhe."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "BLE:n vahvuus"
+            },
+            "software_version": {
+                "name": "Ohjelmisto versio"
+            },
+            "wifi_rssi": {
+                "name": "Wi-Fi RSSI"
+            },
+            "wifi_ssid": {
+                "name": "Wi-Fi BSSID"
+            }
+        }
+    }
+}

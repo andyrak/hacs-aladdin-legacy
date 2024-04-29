@@ -1,0 +1,35 @@
+{
+    "title": "Aladdin Connect Legacy",
+    "config": {
+        "step": {
+            "user": {
+                "description": "თუ დახმარება გჭირდებათ კონფიგურაციასთან დაკავშირებით, გადახედეთ აქ: https://github.com/andyrak/hacs-aladdin-legacy",
+                "data": {
+                    "username": "მომხმარებლის სახელი",
+                    "password": "პაროლი"
+                }
+            }
+        },
+        "error": {
+            "auth": "მომხმარებლის სახელი/პაროლი არასწორია.",
+            "connection": "სერვერთან დაკავშირება შეუძლებელია.",
+            "unknown": "მოხდა უცნობი შეცდომა."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "BLE სიძლიერე"
+            },
+            "software_version": {
+                "name": "პროგრამული ვერსია"
+            },
+            "wifi_rssi": {
+                "name": "Wi-Fi RSSI"
+            },
+            "wifi_ssid": {
+                "name": "Wi-Fi BSSID"
+            }
+        }
+    }
+}

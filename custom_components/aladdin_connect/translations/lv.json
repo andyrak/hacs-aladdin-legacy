@@ -1,0 +1,35 @@
+{
+    "title": "Aladdin Connect Legacy",
+    "config": {
+        "step": {
+            "user": {
+                "description": "Ja jums nepieciešama palīdzība ar konfigurāciju, skatiet šeit: https://github.com/andyrak/hacs-aladdin-legacy",
+                "data": {
+                    "username": "Lietotājvārds",
+                    "password": "Parole"
+                }
+            }
+        },
+        "error": {
+            "auth": "Lietotājvārds/parole ir nepareiza.",
+            "connection": "Nevar izveidot savienojumu ar serveri.",
+            "unknown": "Radās nezināma kļūda."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "BLE spēks"
+            },
+            "software_version": {
+                "name": "Programmatūras versija"
+            },
+            "wifi_rssi": {
+                "name": "Wi-Fi RSSI"
+            },
+            "wifi_ssid": {
+                "name": "Wi-Fi BSSID"
+            }
+        }
+    }
+}

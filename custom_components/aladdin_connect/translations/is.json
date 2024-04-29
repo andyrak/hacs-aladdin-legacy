@@ -1,0 +1,35 @@
+{
+    "title": "Aladdin Connect Legacy",
+    "config": {
+        "step": {
+            "user": {
+                "description": "Ef þú þarft hjálp við uppsetninguna skaltu skoða hér: https://github.com/andyrak/hacs-aladdin-legacy",
+                "data": {
+                    "username": "Notendanafn",
+                    "password": "Lykilorð"
+                }
+            }
+        },
+        "error": {
+            "auth": "Notandanafn/lykilorð er rangt.",
+            "connection": "Ekki hægt að tengjast þjóninum.",
+            "unknown": "Óþekkt villa kom upp."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "BLE Styrkur"
+            },
+            "software_version": {
+                "name": "Hugbúnaðarútgáfa"
+            },
+            "wifi_rssi": {
+                "name": "Wi-Fi RSSI"
+            },
+            "wifi_ssid": {
+                "name": "Wi-Fi BSSID"
+            }
+        }
+    }
+}

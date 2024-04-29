@@ -1,0 +1,35 @@
+{
+    "title": "Aladdin Connect Legacy",
+    "config": {
+        "step": {
+            "user": {
+                "description": "Ha segítségre van szüksége a beállításhoz, nézze meg itt: https://github.com/andyrak/hacs-aladdin-legacy",
+                "data": {
+                    "username": "Felhasználónév",
+                    "password": "Jelszó"
+                }
+            }
+        },
+        "error": {
+            "auth": "A felhasználónév/jelszó rossz.",
+            "connection": "Nem lehet csatlakozni a szerverhez.",
+            "unknown": "Ismeretlen hiba történt."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "BLE Erő"
+            },
+            "software_version": {
+                "name": "Szoftver verzió"
+            },
+            "wifi_rssi": {
+                "name": "Wi-Fi RSSI"
+            },
+            "wifi_ssid": {
+                "name": "Wi-Fi BSSID"
+            }
+        }
+    }
+}

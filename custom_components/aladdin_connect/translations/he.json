@@ -1,0 +1,35 @@
+{
+    "title": "Aladdin Connect Legacy",
+    "config": {
+        "step": {
+            "user": {
+                "description": "אם אתה צריך עזרה עם התצורה, עיין כאן: https://github.com/andyrak/hacs-aladdin-legacy",
+                "data": {
+                    "username": "שם משתמש",
+                    "password": "סיסמה"
+                }
+            }
+        },
+        "error": {
+            "auth": "שם משתמש/סיסמה שגויים.",
+            "connection": "לא מצליח להתחבר לשרת.",
+            "unknown": "אירעה שגיאה לא ידועה."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "BLE כוח"
+            },
+            "software_version": {
+                "name": "גרסת תוכנה"
+            },
+            "wifi_rssi": {
+                "name": "Wi-Fi RSSI"
+            },
+            "wifi_ssid": {
+                "name": "Wi-Fi BSSID"
+            }
+        }
+    }
+}

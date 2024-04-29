@@ -1,0 +1,35 @@
+{
+    "title": "Aladdin Hubungkan Warisan",
+    "config": {
+        "step": {
+            "user": {
+                "description": "Jika Anda memerlukan bantuan dengan konfigurasi, lihat di sini: https://github.com/andyrak/hacs-aladdin-legacy",
+                "data": {
+                    "username": "Nama belakang",
+                    "password": "Kata sandi"
+                }
+            }
+        },
+        "error": {
+            "auth": "Nama Pengguna/Kata Sandi salah.",
+            "connection": "Tidak dapat terhubung ke server.",
+            "unknown": "Terjadi kesalahan yang tidak diketahui."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "Kekuatan BLE"
+            },
+            "software_version": {
+                "name": "Versi perangkat lunak"
+            },
+            "wifi_rssi": {
+                "name": "RSSI Wi-Fi"
+            },
+            "wifi_ssid": {
+                "name": "BSSID Wi-Fi"
+            }
+        }
+    }
+}

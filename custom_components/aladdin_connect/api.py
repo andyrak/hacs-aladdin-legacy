@@ -3,6 +3,7 @@
 import asyncio
 import base64
 import hmac
+import json
 from collections.abc import Callable
 from functools import partial
 
@@ -78,41 +79,12 @@ class AladdinConnect:
         """Command to close the door."""
         return await self._set_door_status(door, DoorStatus.CLOSED)
 
-    def get_door_status(self, door: DoorDevice) -> DoorStatus:
-        """Get the status of a door."""
-        doors = self._doors
-        for d in doors:
-            if d == door:
-                return door["status"]
-        return None
-
-    def get_battery_status(self, door: DoorDevice):
-        """Get battery status for a door."""
-        doors = self._doors
-        for d in doors:
-            if d == door:
-                return door["battery_level"]
-
-    def get_ble_strength(self, door: DoorDevice):
-        """Get BLE status for a door."""
-        doors = self._doors
-        for d in doors:
-            if d == door:
-                return door["ble_strength"]
-
-    def get_rssi_status(self, door: DoorDevice):
-        """Get rssi status for a door."""
-        doors = self._doors
-        for d in doors:
-            if d == door:
-                return door["rssi"]
-
     async def subscribe(self, door: DoorDevice, func: Callable) -> Listener:
         """Subscribe to status updates for a specific door."""
         topic_name = self._door_status_topic(door)
         is_first_subscription = self._get_subscriber_count(topic_name) == 0
         listener = self._subscribe_to_topic(lambda data: func(data), topic_name)
-        self.log.debug(f'[API] Status subscription added for door {door["name"]} [listener={listener}]')
+        self.log.debug(f'[API] Status subscription added for door {door.name} [listener={listener}]')
 
         if is_first_subscription:
             async def poll():
@@ -124,7 +96,7 @@ class AladdinConnect:
                 try:
                     doors = await self.get_doors()
                     for door in doors:
-                        self.log.debug(f'[API] Emitting message for {door["name"]} [{topic_name}]')
+                        self.log.debug(f'[API] Emitting message for {door.name} [{topic_name}]')
                         pub.sendMessage(self.door_status_topic(door), door)
                 except Exception:
                     # log exception and trap, don't interrupt publish
@@ -145,7 +117,7 @@ class AladdinConnect:
         """Unsubscribe from door status updates."""
         topic = self._door_status_topic(door)
         self._unsubscribe_from_topic(listener, topic)
-        self.log.debug(f'[API] Status subscription removed for {door["name"]} [listener={listener}]')
+        self.log.debug(f'[API] Status subscription removed for {door.name} [listener={listener}]')
 
     def _get_subscriber_count(self, topic_name:str) -> int:
         """Get subscriber count for a given topic."""
@@ -178,36 +150,39 @@ class AladdinConnect:
                     self.log.error(f'[API] An error occurred getting devices from account; {error_message}')
                     response.raise_for_status()
 
-                data = await response.json()
-
+                data = json.loads(json.dumps(await response.json()))
                 self.log.debug(f'[API] Configuration response: {data}')
 
                 doors: list[DoorDevice] = []
-                for device in data['devices']:
+
+                for device in data["devices"]:
                     self.log.debug(f'[API] Found device: {device}')
-                    for door in device['doors']:
+                    for door in device["doors"]:
                         self.log.debug(f'[API] Found door: {door}')
 
                         if serial is not None and device["serial_number"] != serial:
                             continue
 
-                        door_data: DoorDevice = {
-                            'device_id': device['id'],
-                            'id': door['id'],
-                            'index': door['door_index'],
-                            'serial_number': device['serial_number'],
-                            'name': door.get('name', 'Garage Door'),
-                            'manufacturer': device.get('vendor', 'UNKNOWN'),
-                            'model': MODEL_MAP.get(device.get('model', 'UKNOWN'), 'UNKNOWN'),
-                            'has_battery_level': (door.get('battery_level', 0) > 0),
-                            'ownership': device['ownership'],
-                            'status': DOOR_STATUS[door.get('status', 0)],
-                            'rssi': device.get("rssi", 0),
-                            'battery_level': door.get('battery_level', 0),
-                            'fault': bool(door.get('fault')),
-                            'link_status': DOOR_LINK_STATUS[door.get("link_status", 0)],
-                            'ble_strength': device.get('ble_strength', 0)
-                        }
+                        door_data = DoorDevice(
+                            battery_level=door.get('battery_level', 0),
+                            ble_strength=device.get('ble_strength', 0),
+                            device_id=device.get("id"),
+                            fault=bool(door.get('fault')),
+                            has_battery_level=(door.get('battery_level', 0) > 0),
+                            has_ble_strength=(door.get('ble_strength', 0) > 0),
+                            id=door['id'],
+                            index=door['door_index'],
+                            link_status=DOOR_LINK_STATUS[door.get("link_status", 0)],
+                            manufacturer=device.get('vendor', 'UNKNOWN'),
+                            model=MODEL_MAP.get(device.get('model', 'UKNOWN'), 'UNKNOWN'),
+                            name=door.get('name', 'Garage Door'),
+                            ownership=device['ownership'],
+                            rssi=device.get("rssi", 0),
+                            serial_number=device['serial_number'],
+                            software_version=device.get('software_version', 'UNKNOWN'),
+                            ssid=device.get('ssid', 'UNKNOWN'),
+                            status=DOOR_STATUS[door.get('status', 0)],
+                        )
 
                         doors.append(door_data)
                 self._doors = doors
@@ -220,20 +195,20 @@ class AladdinConnect:
             headers = {'Authorization': f'Bearer {await self.get_access_token()}'}
             try:
                 async with self._session.post(
-                    f'https://{self.API_HOST}/command/devices/{door["device_id"]}/doors/{door["index"]}',
+                    f'https://{self.API_HOST}/command/devices/{door.device_id}/doors/{door.index}',
                     json={'command': command},
                     headers=headers
                 ) as response:
                     if response.status != 200:
                         error_message = await response.text()
-                        self.log.error(f'[API] An error occurred sending command {command} to door {door["name"]}; {error_message}')
+                        self.log.error(f'[API] An error occurred sending command {command} to door {door.name}; {error_message}')
                         response.raise_for_status()
 
                     data = await response.json()
                     self.log.debug(f'[API] Genie {command} response: {data}')
 
             except Exception as error:
-                self.log.error(f'[API] An error occurred sending command {command} to door {door["name"]}; {error}')
+                self.log.error(f'[API] An error occurred sending command {command} to door {door.name}; {error}')
                 return False
 
             await self._invalidate_door_cache(door)
@@ -244,9 +219,9 @@ class AladdinConnect:
         cache_key = self._door_status_cache_key(door)
         if cache_key in self._cache:
             del self._cache[cache_key]
-            self.log.debug(f'Cache invalidated for door ID {door["id"]} at index {door["index"]}')
+            self.log.debug(f'Cache invalidated for door ID {door.id} at index {door.index}')
         else:
-            self.log.debug(f'No cache entry found for door ID {door["id"]} to invalidate')
+            self.log.debug(f'No cache entry found for door ID {door.id} to invalidate')
 
     def _door_status_stationary_cache_ttl(self):
         """Compute TTL for stationary door status, with bounds checking."""
@@ -271,9 +246,9 @@ class AladdinConnect:
     @staticmethod
     def _door_status_cache_key(door: DoorDevice) -> str:
         """Construct a unique cache key string based on door information."""
-        return f'{door["device_id"]}-{door["index"]}'
+        return f'{door.device_id}-{door.index}'
 
     @staticmethod
     def _door_status_topic(door: DoorDevice) -> str:
         """Construct a unique pub/sub topic string based on door information."""
-        return f'{AladdinConnect.PUB_SUB_DOOR_STATUS_TOPIC}.{door["device_id"]}.{door["index"]}'
+        return f'{AladdinConnect.PUB_SUB_DOOR_STATUS_TOPIC}.{door.device_id}.{door.index}'

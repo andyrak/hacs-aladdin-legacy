@@ -45,7 +45,7 @@ def remove_stale_devices(
     device_entries = dr.async_entries_for_config_entry(
         device_registry, config_entry.entry_id
     )
-    all_device_ids = {f"{door["device_id"]}-{door["index"]}" for door in devices}
+    all_device_ids = {f"{door.device_id}-{door.index}" for door in devices}
 
     for device_entry in device_entries:
         device_id: str | None = None
@@ -79,16 +79,14 @@ class AladdinDevice(CoverEntity):
         self._ac = ac
         self._door = door
         self._listener = '' # will be set in async context
-        self._index = door["index"]
-        self._serial = door["serial_number"]
 
         self._attr_device_info = DeviceInfo(
-            identifiers={(DOMAIN, f"{self._door["device_id"]}-{self._door["index"]}")},
-            name=door["name"],
-            manufacturer=door["manufacturer"],
-            model=door["model"],
+            identifiers={(DOMAIN, f"{door.device_id}-{door.index}")},
+            name=door.name,
+            manufacturer=door.manufacturer,
+            model=door.model,
         )
-        self._attr_unique_id = f"{self._door["device_id"]}-{self._door["index"]}"
+        self._attr_unique_id = f"{door.device_id}-{door.index}"
 
     async def async_added_to_hass(self) -> None:
         """Connect Aladdin Connect to the cloud."""
@@ -111,7 +109,7 @@ class AladdinDevice(CoverEntity):
     async def async_update(self) -> None:
         """Update status of cover."""
         try:
-            await self._ac.get_doors(self._serial)
+            await self._ac.get_doors(self._door.serial_number)
             self._attr_available = True
         except ClientConnectionError or ClientResponseError as ce:
             self._ac.log.error(f'[Cover] Async update failed due to client error: {ce}')
@@ -123,7 +121,7 @@ class AladdinDevice(CoverEntity):
     @property
     def is_closed(self) -> bool | None:
         """Update is closed attribute."""
-        value = STATES_MAP.get(self._ac.get_door_status(self._door))
+        value = STATES_MAP.get(self._door.status)
         if value is None:
             return None
         return value == STATE_CLOSED
@@ -132,7 +130,7 @@ class AladdinDevice(CoverEntity):
     def is_closing(self) -> bool:
         """Update is closing attribute."""
         return (
-            STATES_MAP.get(self._ac.get_door_status(self._door))
+            STATES_MAP.get(self._door.status)
             == STATE_CLOSING
         )
 
@@ -140,6 +138,6 @@ class AladdinDevice(CoverEntity):
     def is_opening(self) -> bool:
         """Update is opening attribute."""
         return (
-            STATES_MAP.get(self._ac.get_door_status(self._door))
+            STATES_MAP.get(self._door.status)
             == STATE_OPENING
         )

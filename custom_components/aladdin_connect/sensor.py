@@ -13,13 +13,14 @@ from homeassistant.components.sensor import (
     SensorEntityDescription,
     SensorStateClass,
 )
-from homeassistant.const import PERCENTAGE, SIGNAL_STRENGTH_DECIBELS
+from homeassistant.const import PERCENTAGE, SIGNAL_STRENGTH_DECIBELS, EntityCategory
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers.typing import StateType
 
 from .api import AladdinConnect
-from .const import DOMAIN, MODEL_MAP
+from .const import DOMAIN
 from .model import DoorDevice
 
 
@@ -27,7 +28,8 @@ from .model import DoorDevice
 class AcSensorEntityDescription(SensorEntityDescription):
     """Describes AladdinConnect sensor entity."""
 
-    value_fn: Callable
+    exists_fn: Callable[[DoorDevice], bool] = lambda _: True
+    value_fn: Callable[[DoorDevice], StateType]
 
 
 SENSORS: tuple[AcSensorEntityDescription, ...] = (
@@ -37,16 +39,8 @@ SENSORS: tuple[AcSensorEntityDescription, ...] = (
         entity_registry_enabled_default=False,
         native_unit_of_measurement=PERCENTAGE,
         state_class=SensorStateClass.MEASUREMENT,
-        value_fn=AladdinConnect.get_battery_status,
-    ),
-    AcSensorEntityDescription(
-        key="rssi",
-        translation_key="wifi_strength",
-        device_class=SensorDeviceClass.SIGNAL_STRENGTH,
-        entity_registry_enabled_default=False,
-        native_unit_of_measurement=SIGNAL_STRENGTH_DECIBELS,
-        state_class=SensorStateClass.MEASUREMENT,
-        value_fn=AladdinConnect.get_rssi_status,
+        value_fn=lambda door: door.battery_level,
+        exists_fn=lambda door: door.has_battery_level
     ),
     AcSensorEntityDescription(
         key="ble_strength",
@@ -55,27 +49,50 @@ SENSORS: tuple[AcSensorEntityDescription, ...] = (
         entity_registry_enabled_default=False,
         native_unit_of_measurement=SIGNAL_STRENGTH_DECIBELS,
         state_class=SensorStateClass.MEASUREMENT,
-        value_fn=AladdinConnect.get_ble_strength,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        value_fn=lambda door: door.ble_strength,
+        exists_fn=lambda door: door.has_ble_strength
     ),
-)
+    AcSensorEntityDescription(
+        key="software_version",
+        translation_key="software_version",
+        entity_registry_enabled_default=False,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        value_fn=lambda door: door.software_version,
+        exists_fn=lambda door: door.software_version != 'UNKNOWN'
+    ),
+    AcSensorEntityDescription(
+        key="wifi_ssid",
+        translation_key="wifi_ssid",
+        entity_registry_enabled_default=False,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        value_fn=lambda door: door.ssid,
+    ),
+    AcSensorEntityDescription(
+        key="wifi_rssi",
+        translation_key="wifi_rssi",
+        device_class=SensorDeviceClass.SIGNAL_STRENGTH,
+        entity_registry_enabled_default=False,
+        native_unit_of_measurement=SIGNAL_STRENGTH_DECIBELS,
+        state_class=SensorStateClass.MEASUREMENT,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        value_fn=lambda door: door.rssi,
+    ),
 
+)
 
 async def async_setup_entry(
     hass: HomeAssistant, entry: config_entries.ConfigEntry, async_add_entities: AddEntitiesCallback
 ) -> None:
     """Set up Aladdin Connect sensor devices."""
-
     ac: AladdinConnect= hass.data[DOMAIN][entry.entry_id]
-
-    entities = []
     doors = await ac.get_doors()
 
-    for door in doors:
-        entities.extend(
-            [AladdinConnectSensor(ac, door, description) for description in SENSORS]
-        )
-
-    async_add_entities(entities)
+    async_add_entities(
+            AladdinConnectSensor(ac, door, description)
+            for door in doors for description in SENSORS
+            if description.exists_fn(door)
+    )
 
 
 class AladdinConnectSensor(SensorEntity):
@@ -91,28 +108,17 @@ class AladdinConnectSensor(SensorEntity):
         description: AcSensorEntityDescription,
     ) -> None:
         """Initialize a sensor for an Aladdin Connect device."""
-        self._device_id = device["device_id"]
-        self._index = device["index"]
         self._ac = ac
         self._door = device
         self.entity_description = description
-        self._attr_unique_id = f"{self._device_id}-{self._index}-{description.key}"
+        self._attr_unique_id = f"{device.device_id}-{device.index}-{description.key}"
         self._attr_device_info = DeviceInfo(
-            identifiers={(DOMAIN, f"{self._device_id}-{self._index}")},
-            name=device["name"],
-            manufacturer=device["manufacturer"],
-            model=device["model"],
+            identifiers={(DOMAIN, f"{device.device_id}-{device.index}")},
+            name=device.name,
+            manufacturer=device.manufacturer,
+            model=device.model,
         )
-        if device["model"] == "01" and description.key in (
-            "battery_level",
-            "ble_strength",
-        ):
-            self._attr_entity_registry_enabled_default = True
-
-        if device["model"] == MODEL_MAP.get('02') and description.key in (
-            "rssi",
-        ):
-            self._attr_entity_registry_enabled_default = True
+        self._attr_entity_registry_enabled_default = True
 
 
     @property
@@ -120,5 +126,5 @@ class AladdinConnectSensor(SensorEntity):
         """Return the state of the sensor."""
         return cast(
             float,
-            self.entity_description.value_fn(self._ac, self._door),
+            self.entity_description.value_fn(self._door),
         )

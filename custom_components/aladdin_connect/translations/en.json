@@ -1,4 +1,5 @@
 {
+    "title": "Aladdin Connect Legacy",
     "config": {
         "step": {
             "user": {
@@ -13,6 +14,22 @@
             "auth": "Username/Password is wrong.",
             "connection": "Unable to connect to the server.",
             "unknown": "Unknown error occurred."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "ble_strength": {
+                "name": "BLE Strength"
+            },
+            "software_version": {
+                "name": "Software Version"
+            },
+            "wifi_rssi": {
+                "name": "Wi-Fi RSSI"
+            },
+            "wifi_ssid": {
+                "name": "Wi-Fi BSSID"
+            }
         }
     }
 }

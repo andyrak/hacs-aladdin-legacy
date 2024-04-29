@@ -41,7 +41,7 @@ STATES_MAP: Final[dict[str, str]] = {
 }
 
 MODEL_MAP: Final[dict[str, str]] = {
-    "02": "Ceiling Mount",
+    "02": "Ceiling Mount (02)",
 }
 
 DOOR_STATUS = {

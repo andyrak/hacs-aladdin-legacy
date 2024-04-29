@@ -7,6 +7,7 @@ from homeassistant import config_entries
 from homeassistant.const import CONF_PASSWORD, CONF_USERNAME, Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryAuthFailed, ConfigEntryNotReady
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .api import AladdinConnect
 from .const import DOMAIN
@@ -22,10 +23,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: config_entries.ConfigEnt
         'password': entry.data[CONF_PASSWORD]
     }
 
-    ac = AladdinConnect(_LOGGER, config)
+    ac = AladdinConnect(logger=_LOGGER, session=async_get_clientsession(hass), config=config)
 
     try:
-        await ac.init_session()
+        await ac.get_access_token()
     except ClientConnectionError or TimeoutError as ex:
         raise ConfigEntryNotReady("Can not connect to host") from ex
     except ClientResponseError as ex:

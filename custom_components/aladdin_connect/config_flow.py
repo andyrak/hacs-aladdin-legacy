@@ -12,6 +12,7 @@ from homeassistant import config_entries
 from homeassistant.const import CONF_PASSWORD, CONF_USERNAME
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import HomeAssistantError
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .api import AladdinConnect
 from .const import DOMAIN
@@ -37,9 +38,9 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> None:
         'password': data[CONF_PASSWORD],
     }
 
-    ac = AladdinConnect(logger=_LOGGER, config=config)
+    ac = AladdinConnect(logger=_LOGGER, session=async_get_clientsession(hass), config=config)
     try:
-        await ac.init_session()
+        await ac.get_access_token()
     except (ClientError, TimeoutError):
         raise
 

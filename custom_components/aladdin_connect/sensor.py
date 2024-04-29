@@ -59,7 +59,7 @@ SENSORS: tuple[AcSensorEntityDescription, ...] = (
         entity_registry_enabled_default=False,
         entity_category=EntityCategory.DIAGNOSTIC,
         value_fn=lambda door: door.software_version,
-        exists_fn=lambda door: door.software_version is not 'UNKNOWN'
+        exists_fn=lambda door: door.software_version != 'UNKNOWN'
     ),
     AcSensorEntityDescription(
         key="wifi_ssid",

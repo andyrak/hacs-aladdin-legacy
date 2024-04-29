@@ -97,7 +97,6 @@ class AladdinDevice(CoverEntity):
     async def async_will_remove_from_hass(self) -> None:
         """Close Aladdin Connect before removing."""
         self._ac.unsubscribe(self._listener, self._door)
-        await self._ac.close_session()
 
     async def async_close_cover(self, **kwargs: Any) -> None:
         """Issue close command to cover."""

@@ -101,12 +101,12 @@ class AladdinDevice(CoverEntity):
 
     async def async_close_cover(self, **kwargs: Any) -> None:
         """Issue close command to cover."""
-        if not await self._ac.close_door(self._device_id, self._number):
+        if not await self._ac.close_door(self._door):
             raise HomeAssistantError("Aladdin Connect API failed to close the cover")
 
     async def async_open_cover(self, **kwargs: Any) -> None:
         """Issue open command to cover."""
-        if not await self._ac.open_door(self._device_id, self._number):
+        if not await self._ac.open_door(self._door):
             raise HomeAssistantError("Aladdin Connect API failed to open the cover")
 
     async def async_update(self) -> None:

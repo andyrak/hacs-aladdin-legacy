@@ -1,6 +1,8 @@
 ![HACS Badge](https://img.shields.io/badge/hacs-custom-orange?link=https%3A%2F%2Fgithub.com%2Fhacs%2Fintegration)
 ![Build Status](https://img.shields.io/github/actions/workflow/status/andyrak/hacs-aladdin-legacy/release.yml)
 ![GitHub Release](https://img.shields.io/github/v/release/andyrak/hacs-aladdin-legacy)
+![HACS Installs](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fanalytics.home-assistant.io%2Fcustom_integrations.json&query=%24.aladdin_connect.total&suffix=%20installs&logo=home-assistant&label=usage&color=41BDF5&cacheSeconds=15600)
+
 
 # hacs-aladdin-legacy
 

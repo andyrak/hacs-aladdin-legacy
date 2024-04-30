@@ -10,7 +10,7 @@ class DoorDevice:
     """Aladdin door device."""
 
     def __eq__(self, other):
-        """Override == operator to check against id fields."""
+        """Override == operator."""
         if not isinstance(other, DoorDevice):
             return NotImplemented
 
@@ -20,6 +20,7 @@ class DoorDevice:
                 self.status == other.status)
 
     def __hash__(self):
+        """Override hash function."""
         return hash((self.device_id, self.index, self.name, self.status))
 
     battery_level: int

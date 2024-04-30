@@ -13,6 +13,7 @@ from pubsub.core import Listener
 from .const import DOOR_LINK_STATUS, DOOR_STATUS, MODEL_MAP, DoorCommand, DoorStatus
 from .model import DoorDevice
 
+
 class AladdinConnect:
     """Aladdin Connect client class."""
 
@@ -261,7 +262,7 @@ class AladdinConnect:
 
     @staticmethod
     def _door_status_cache_key(serial: str = None) -> str:
-        """Construct a unique cache key based on serial number"""
+        """Construct a unique cache key based on serial number."""
         return 'all_doors' if serial is None else serial
 
     @staticmethod

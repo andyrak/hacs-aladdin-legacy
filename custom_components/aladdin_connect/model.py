@@ -14,7 +14,13 @@ class DoorDevice:
         if not isinstance(other, DoorDevice):
             return NotImplemented
 
-        return self.id == other.id
+        return (self.device_id == other.device_id and
+                self.index == other.index and
+                self.name == other.name and
+                self.status == other.status)
+
+    def __hash__(self):
+        return hash((self.device_id, self.index, self.name, self.status))
 
     battery_level: int
     ble_strength: int

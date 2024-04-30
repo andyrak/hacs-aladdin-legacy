@@ -5,7 +5,7 @@
 # hacs-aladdin-legacy
 
 ## Summary
-[Genie Aladdin Connect](https://www.geniecompany.com/aladdin-connect-by-genie) legacy plugin for Home Assistant via HACS.
+[Aladdin Connect](https://www.geniecompany.com/aladdin-connect-by-genie) legacy plugin for Home Assistant via HACS.
 
 A workaround to use the legacy mechanisms while Aladdin works on their new API.
 

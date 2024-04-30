@@ -5,10 +5,8 @@ import base64
 import hmac
 import json
 from collections.abc import Callable
-from functools import partial
 
-from cachetools import TTLCache, cachedmethod
-from cachetools.keys import hashkey
+from cachetools import TTLCache
 from pubsub import pub
 from pubsub.core import Listener
 
@@ -67,9 +65,12 @@ class AladdinConnect:
 
     async def get_doors(self, serial: str = None):
         """Retrieve all door statuses, refreshing from the service if needed."""
-        if not self._doors:
-            await self._cache_all_doors(serial)
-        return self._doors
+        cache_key = self._door_status_cache_key(serial)
+
+        if cache_key in self._cache:
+            return self._cache[cache_key]
+
+        return await self._cache_all_doors(serial)
 
     async def open_door(self, door: DoorDevice):
         """Command to open the door."""
@@ -97,7 +98,7 @@ class AladdinConnect:
                     doors = await self.get_doors()
                     for door in doors:
                         self.log.debug(f'[API] Emitting message for {door.name} [{topic_name}]')
-                        pub.sendMessage(self.door_status_topic(door), door)
+                        pub.sendMessage(self._door_status_topic(door), data=door)
                 except Exception:
                     # log exception and trap, don't interrupt publish
                     pass
@@ -138,9 +139,15 @@ class AladdinConnect:
             del self._subscribers_count[topic_name]
         pub.unsubscribe(listener, topic_name)
 
-    @cachedmethod(cache=lambda self: TTLCache(maxsize=1024, ttl=300), key=partial(hashkey, 'getAllDoors'))
     async def _cache_all_doors(self, serial: str = None) -> list[DoorDevice]:
         """Call out to AladdinConnect service to retrieve all device and door info."""
+
+        cache_key = self._door_status_cache_key(serial)
+
+        if cache_key in self._cache:
+            doors_data = self._cache[cache_key]
+            return doors_data
+
         headers = {
             'Authorization': f'Bearer {await self.get_access_token()}'
         }
@@ -183,9 +190,10 @@ class AladdinConnect:
                             ssid=device.get('ssid', 'UNKNOWN'),
                             status=DOOR_STATUS[door.get('status', 0)],
                         )
-
+                        self._cache[door_data.serial_number] = door_data
                         doors.append(door_data)
                 self._doors = doors
+                self._cache['all_doors'] = doors
                 return doors
 
     async def _set_door_status(self, door: DoorDevice, desired_status: DoorStatus) -> None:
@@ -193,6 +201,7 @@ class AladdinConnect:
         async with self.DOOR_STATUS_LOCK:
             command = DoorCommand.OPEN if desired_status == DoorStatus.OPEN else DoorCommand.CLOSE
             headers = {'Authorization': f'Bearer {await self.get_access_token()}'}
+            self.log.debug(f'[API] Requesting [{command}] on {door.name}')
             try:
                 async with self._session.post(
                     f'https://{self.API_HOST}/command/devices/{door.device_id}/doors/{door.index}',
@@ -212,16 +221,19 @@ class AladdinConnect:
                 return False
 
             await self._invalidate_door_cache(door)
+            door.status = desired_status
+            pub.sendMessage(self._door_status_topic(door), data=door)
             return True
 
     async def _invalidate_door_cache(self, door: DoorDevice) -> None:
         """Invalidate the cache for a specific door."""
+
         cache_key = self._door_status_cache_key(door)
         if cache_key in self._cache:
             del self._cache[cache_key]
-            self.log.debug(f'Cache invalidated for door ID {door.id} at index {door.index}')
+            self.log.debug(f'[API] Cache invalidated for {cache_key}')
         else:
-            self.log.debug(f'No cache entry found for door ID {door.id} to invalidate')
+            self.log.debug(f'[API] No cache entry found for {cache_key} to invalidate')
 
     def _door_status_stationary_cache_ttl(self):
         """Compute TTL for stationary door status, with bounds checking."""
@@ -246,7 +258,12 @@ class AladdinConnect:
     @staticmethod
     def _door_status_cache_key(door: DoorDevice) -> str:
         """Construct a unique cache key string based on door information."""
-        return f'{door.device_id}-{door.index}'
+        return door.serial_number
+
+    @staticmethod
+    def _door_status_cache_key(serial: str = None) -> str:
+        """Construct a unique cache key based on serial number."""
+        return 'all_doors' if serial is None else serial
 
     @staticmethod
     def _door_status_topic(door: DoorDevice) -> str:

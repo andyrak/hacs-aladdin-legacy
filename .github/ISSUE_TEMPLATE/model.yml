@@ -29,6 +29,6 @@ body:
     label: "Aladdin Connect Model Name"
     description: |
       "The model name of your device, as shown in the Aladdin Connect UI."
-      "Example: ![image](https://zipline.arakulo.us/u/best-sophisticated-australiankestrel.jpeg)"
+      "Example: ![image](https://zipline.arakulo.us/r/best-sophisticated-australiankestrel.jpeg?compress=false)"
   validations:
     required: true

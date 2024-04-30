@@ -19,8 +19,8 @@ body:
   attributes:
     label: "API model details"
     description: |
-      "After turning on debug logging, paste a snippet from the `[API] Found device:` log message here, with only the `model`, `family`, and `vendor` fields."
-      "For example: `'model': '02', 'family': 2, 'vendor': 'GENIE',`"
+      After turning on debug logging, paste a snippet from the `[API] Found device:` log message here, with only the `model`, `family`, and `vendor` fields.
+      For example: `'model': '02', 'family': 2, 'vendor': 'GENIE',`
     render: text
   validations:
     required: true
@@ -28,7 +28,7 @@ body:
   attributes:
     label: "Aladdin Connect Model Name"
     description: |
-      "The model name of your device, as shown in the Aladdin Connect UI."
-      "Example: ![image](https://zipline.arakulo.us/r/torn-fussy-indusriverdolphin.jpeg?compress=false)"
+      The model name of your device, as shown in the Aladdin Connect UI.
+      Example: ![image](https://zipline.arakulo.us/r/torn-fussy-indusriverdolphin.jpeg?compress=false)
   validations:
     required: true

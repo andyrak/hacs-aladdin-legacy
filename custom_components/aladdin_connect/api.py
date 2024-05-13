@@ -215,10 +215,15 @@ class AladdinConnect:
 
                     data = await response.json()
                     self.log.debug(f'[API] Genie {command} response: {data}')
-
             except Exception as error:
-                self.log.error(f'[API] An error occurred sending command {command} to door {door.name}; {error}')
-                return False
+                # Ignore "Door is already open/closed" errors to maintain backwards compatibility
+                should_ignore = (
+                    f'{{"code":400,"error":"Door is already {desired_status}"}}'
+                    in str(error.args[0])
+                )
+                if not should_ignore:
+                    self.log.error(f'[API] An error occurred sending command {command} to door {door.name}; {error}')
+                    return False
 
             await self._invalidate_door_cache(door)
             door.status = desired_status

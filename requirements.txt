@@ -1,4 +1,4 @@
-colorlog==6.8.2
+colorlog==6.9.0
 homeassistant==2024.4.3
 pip>=21.0,<25.2
 pypubsub==4.0.3

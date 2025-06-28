@@ -101,8 +101,10 @@ class AladdinConnect:
                         old_door = next((d for d in self._doors if d.id == door.id), None)
                         if old_door is None or old_door.status != door.status:
                             self.log.debug(f'[API] Status change detected for {door.name}: {old_door.status if old_door else "unknown"} -> {door.status}')
-                        self.log.debug(f'[API] Emitting message for {door.name} [{topic_name}]')
-                        pub.sendMessage(self._door_status_topic(door), data=door)
+                            self.log.debug(f'[API] Emitting message for {door.name} [{topic_name}]')
+                            pub.sendMessage(self._door_status_topic(door), data=door)
+                    # Update our cached door list for next comparison
+                    self._doors = doors
                 except Exception as e:
                     self.log.debug(f'[API] Polling error for [{topic_name}]: {e}')
                     # log exception and trap, don't interrupt publish

@@ -27,8 +27,27 @@ jobs:
       - name: "Adjust version number"
         shell: "bash"
         run: |
-          yq -i -o json '.version="${{ github.ref_name }}"' \
-            "${{ github.workspace }}/custom_components/aladdin_connect/manifest.json"
+          MANIFEST_PATH="${{ github.workspace }}/custom_components/aladdin_connect/manifest.json"
+          echo "Updating version to ${{ github.ref_name }} in $MANIFEST_PATH"
+          
+          # Create backup
+          cp "$MANIFEST_PATH" "$MANIFEST_PATH.backup"
+          
+          # Update version using jq
+          jq '.version = "${{ github.ref_name }}"' "$MANIFEST_PATH" > "$MANIFEST_PATH.tmp"
+          mv "$MANIFEST_PATH.tmp" "$MANIFEST_PATH"
+          
+          # Verify the change
+          echo "Updated manifest.json:"
+          cat "$MANIFEST_PATH"
+          
+          # Confirm version was updated
+          NEW_VERSION=$(jq -r '.version' "$MANIFEST_PATH")
+          if [ "$NEW_VERSION" != "${{ github.ref_name }}" ]; then
+            echo "ERROR: Version update failed. Expected ${{ github.ref_name }}, got $NEW_VERSION"
+            exit 1
+          fi
+          echo "✅ Version successfully updated to $NEW_VERSION"
 
       - name: Zip custom components dir
         working-directory: "custom_components"

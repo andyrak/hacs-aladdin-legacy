@@ -97,9 +97,14 @@ class AladdinConnect:
                 try:
                     doors = await self.get_doors()
                     for door in doors:
+                        # Check if status has changed since last poll
+                        old_door = next((d for d in self._doors if d.id == door.id), None)
+                        if old_door is None or old_door.status != door.status:
+                            self.log.debug(f'[API] Status change detected for {door.name}: {old_door.status if old_door else "unknown"} -> {door.status}')
                         self.log.debug(f'[API] Emitting message for {door.name} [{topic_name}]')
                         pub.sendMessage(self._door_status_topic(door), data=door)
-                except Exception:
+                except Exception as e:
+                    self.log.debug(f'[API] Polling error for [{topic_name}]: {e}')
                     # log exception and trap, don't interrupt publish
                     pass
 
@@ -119,6 +124,16 @@ class AladdinConnect:
         topic = self._door_status_topic(door)
         self._unsubscribe_from_topic(listener, topic)
         self.log.debug(f'[API] Status subscription removed for {door.name} [listener={listener}]')
+
+    async def refresh_door_status(self, door: DoorDevice) -> DoorDevice:
+        """Force an immediate refresh of a specific door's status."""
+        await self._invalidate_door_cache(door)
+        doors = await self._cache_all_doors()
+        for updated_door in doors:
+            if updated_door.id == door.id:
+                pub.sendMessage(self._door_status_topic(door), data=updated_door)
+                return updated_door
+        return door
 
     def _get_subscriber_count(self, topic_name:str) -> int:
         """Get subscriber count for a given topic."""
@@ -216,18 +231,45 @@ class AladdinConnect:
                     data = await response.json()
                     self.log.debug(f'[API] Genie {command} response: {data}')
             except Exception as error:
-                # Ignore "Door is already open/closed" errors to maintain backwards compatibility
-                should_ignore = (
-                    f'{{"code":400,"error":"Door is already {desired_status}"}}'
-                    in str(error.args[0])
+                # Check for "Door is already open/closed" errors and handle gracefully
+                error_str = str(error.args[0]) if error.args else str(error)
+                is_already_status_error = (
+                    f'"Door is already {desired_status.lower()}"' in error_str or
+                    f'Door is already {desired_status.lower()}' in error_str or
+                    'already' in error_str.lower() and desired_status.lower() in error_str.lower()
                 )
-                if not should_ignore:
+
+                if is_already_status_error:
+                    self.log.debug(f'[API] Door {door.name} is already {desired_status.lower()}, treating as success')
+                    # Force immediate status refresh to ensure we have current state
+                    await self._invalidate_door_cache(door)
+                    try:
+                        updated_doors = await self._cache_all_doors()
+                        for updated_door in updated_doors:
+                            if updated_door.id == door.id:
+                                door.status = updated_door.status
+                                pub.sendMessage(self._door_status_topic(door), data=updated_door)
+                                break
+                    except Exception as refresh_error:
+                        self.log.debug(f'[API] Failed to refresh status after duplicate command: {refresh_error}')
+                    return True
+                else:
                     self.log.error(f'[API] An error occurred sending command {command} to door {door.name}; {error}')
                     return False
 
             await self._invalidate_door_cache(door)
-            door.status = desired_status
-            pub.sendMessage(self._door_status_topic(door), data=door)
+            # Force immediate status refresh to get actual door state
+            try:
+                updated_doors = await self._cache_all_doors()
+                for updated_door in updated_doors:
+                    if updated_door.id == door.id:
+                        pub.sendMessage(self._door_status_topic(door), data=updated_door)
+                        break
+            except Exception as refresh_error:
+                self.log.debug(f'[API] Failed to refresh status after successful command: {refresh_error}')
+                # Fallback to optimistic update
+                door.status = desired_status
+                pub.sendMessage(self._door_status_topic(door), data=door)
             return True
 
     async def _invalidate_door_cache(self, door: DoorDevice) -> None:

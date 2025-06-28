@@ -19,7 +19,7 @@ from .api import AladdinConnect
 from .const import DOMAIN, STATES_MAP, SUPPORTED_FEATURES
 from .model import DoorDevice
 
-SCAN_INTERVAL = timedelta(seconds=300)
+SCAN_INTERVAL = timedelta(seconds=30)
 
 async def async_setup_entry(
     hass: HomeAssistant,
@@ -109,7 +109,8 @@ class AladdinDevice(CoverEntity):
     async def async_update(self) -> None:
         """Update status of cover."""
         try:
-            await self._ac.get_doors(self._door.serial_number)
+            updated_door = await self._ac.refresh_door_status(self._door)
+            self._door = updated_door
             self._attr_available = True
         except ClientConnectionError or ClientResponseError as ce:
             self._ac.log.error(f'[Cover] Async update failed due to client error: {ce}')

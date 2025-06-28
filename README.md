@@ -3,11 +3,6 @@
 ![GitHub Release](https://img.shields.io/github/v/release/andyrak/hacs-aladdin-legacy)
 ![HACS Installs](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fanalytics.home-assistant.io%2Fcustom_integrations.json&query=%24.aladdin_connect.total&suffix=%20installs&logo=home-assistant&label=usage&color=41BDF5&cacheSeconds=15600)
 
-# 🚧🚨 DEPRECATED 🚨🚧
-⚠️ This repo is no longer supported as of the June 6, 2024. The [Home Assistant 2024.6](https://www.home-assistant.io/blog/2024/06/05/release-20246) release has brought back the official Aladdin Connect plugin. ⚠️
-
-=========================================
-
 ## hacs-aladdin-legacy
 
 ### Summary
